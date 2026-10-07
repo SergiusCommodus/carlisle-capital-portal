@@ -1,0 +1,1160 @@
+<title>Carlisle Capital Portal</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a deep navy band carries the laurel crest and section tabs; content sits in one 1160px column on warm ivory. Gold is reserved for value, live state and the primary action. Motion: staged entrances, counted numbers, drawn charts. */
+:root{
+  --navy:#0A2541; --navy2:#061A30; --navy3:#123358; --gold:#A8915A; --gold2:#C4AD75; --gold-soft:#F4EEDF;
+  --bg:#F5F3EE; --surface:#FFFFFF; --surface2:#F8F6F1; --ink:#0F1F33; --muted:#5B6878; --line:#DEDACF; --line2:#ECE8DE;
+  --band:#0A2541; --band2:#061A30; --band-ink:#F3F0E8; --band-muted:#9FB0C4;
+  --btn:#0A2541; --btn-ink:#F7F5EF;
+  --good:#1F7A4D; --good-soft:#E1F1E7; --warn:#946312; --warn-soft:#F7ECD5; --bad:#A6382E; --bad-soft:#F7E2DE;
+  --shadow:0 1px 2px rgba(10,37,65,.06),0 10px 30px rgba(10,37,65,.08);
+  --brand:"Cinzel","Trajan Pro",Georgia,serif;
+  --display:"Cormorant Garamond","Iowan Old Style",Georgia,serif;
+  --body:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:12px; --ease:cubic-bezier(.22,.8,.3,1);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#071525; --surface:#0C2038; --surface2:#112843; --ink:#ECE8DF; --muted:#9DAABB; --line:#1F3853; --line2:#172E47;
+  --band:#061A30; --band2:#040F1D; --band-ink:#F1EEE6; --band-muted:#8FA1B8;
+  --btn:#A8915A; --btn-ink:#0A1A2C; --gold:#C8AE74; --gold2:#DCC89A; --gold-soft:#2A2615;
+  --good:#5FC58B; --good-soft:#12301F; --warn:#E3B45C; --warn-soft:#2E2412; --bad:#E8857A; --bad-soft:#331B18;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 30px rgba(0,0,0,.3); color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#071525; --surface:#0C2038; --surface2:#112843; --ink:#ECE8DF; --muted:#9DAABB; --line:#1F3853; --line2:#172E47;
+  --band:#061A30; --band2:#040F1D; --band-ink:#F1EEE6; --band-muted:#8FA1B8;
+  --btn:#A8915A; --btn-ink:#0A1A2C; --gold:#C8AE74; --gold2:#DCC89A; --gold-soft:#2A2615;
+  --good:#5FC58B; --good-soft:#12301F; --warn:#E3B45C; --warn-soft:#2E2412; --bad:#E8857A; --bad-soft:#331B18;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 10px 30px rgba(0,0,0,.3); color-scheme:dark;}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;overflow-x:hidden}
+h1,h2,h3,h4{text-wrap:balance;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono)}
+.label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.gold{color:var(--gold)}
+.up{color:var(--good)} .down{color:var(--bad)}
+
+/* ---------- Keyframes ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+@keyframes ringDraw{to{stroke-dashoffset:0}}
+@keyframes spread{from{letter-spacing:.6em;opacity:0}to{letter-spacing:.32em;opacity:1}}
+@keyframes bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes growX{from{width:0}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,122,77,.55)}70%{box-shadow:0 0 0 9px rgba(31,122,77,0)}100%{box-shadow:0 0 0 0 rgba(31,122,77,0)}}
+@keyframes shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+@keyframes drawLine{to{stroke-dashoffset:0}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes flashUp{0%{background:var(--good-soft)}100%{background:transparent}}
+@keyframes flashDown{0%{background:var(--bad-soft)}100%{background:transparent}}
+@keyframes wipe{to{clip-path:inset(0 0 100% 0)}}
+@keyframes glint{0%{transform:translateX(-120%) skewX(-20deg)}100%{transform:translateX(220%) skewX(-20deg)}}
+@keyframes popIn{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes checkDraw{to{stroke-dashoffset:0}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* ---------- Intro ---------- */
+#intro{position:fixed;inset:0;z-index:60;background:radial-gradient(ellipse at 50% 35%,#123358 0%,var(--navy2) 60%,#030B16 100%);color:var(--band-ink);display:grid;place-items:center;cursor:pointer;overflow:hidden}
+#intro.out{animation:wipe .7s var(--ease) forwards;pointer-events:none}
+#intro::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 70%,rgba(200,174,116,.07) 80%,transparent 90%);animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.intro-inner{position:relative;display:grid;justify-items:center;gap:10px;text-align:center;padding:24px}
+.intro-logo{position:relative;width:min(300px,70vw);aspect-ratio:1;display:grid;place-items:center}
+.intro-logo img{width:78%;height:auto;opacity:0;animation:scaleIn 1.1s var(--ease) .35s forwards;filter:drop-shadow(0 10px 30px rgba(0,0,0,.45)) brightness(1.25)}
+.intro-logo svg{position:absolute;inset:0;width:100%;height:100%}
+.intro-logo .ring{fill:none;stroke:var(--gold2);stroke-width:1.2;stroke-dasharray:900;stroke-dashoffset:900;animation:ringDraw 1.6s var(--ease) .1s forwards}
+.intro-logo .ring2{fill:none;stroke:rgba(200,174,116,.35);stroke-width:.6;stroke-dasharray:4 6;stroke-dashoffset:860;animation:ringDraw 2.2s var(--ease) .3s forwards}
+.intro-word{font-family:var(--brand);font-size:clamp(18px,4vw,26px);font-weight:600;letter-spacing:.32em;padding-left:.32em;opacity:0;animation:spread 1.2s var(--ease) 1s forwards}
+.intro-sub{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);opacity:0;animation:fadeIn .8s ease 1.6s forwards}
+.intro-bar{width:160px;height:1px;background:rgba(255,255,255,.12);margin-top:14px;overflow:hidden;opacity:0;animation:fadeIn .4s ease 1.2s forwards}
+.intro-bar i{display:block;height:100%;background:var(--gold2);transform-origin:left;animation:bar 2.2s linear 1.2s forwards}
+.intro-skip{position:absolute;bottom:calc(22px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--band-muted);opacity:0;animation:fadeIn 1s ease 2s forwards}
+
+/* ---------- Demo strip ---------- */
+.demo{background:var(--gold-soft);color:var(--ink);font-size:12.5px;padding:6px 16px;text-align:center;border-bottom:1px solid var(--line2)}
+
+/* ---------- Login ---------- */
+#login{min-height:100%;display:grid;place-items:center;padding-block:40px;padding-inline:16px;background:
+ radial-gradient(60% 50% at 50% 0%,rgba(168,145,90,.12),transparent 70%),var(--bg)}
+.login-card{width:100%;max-width:480px;display:grid;gap:22px;animation:rise .8s var(--ease)}
+.login-head{display:grid;justify-items:center;gap:6px;text-align:center}
+.login-head img{width:170px;height:auto;animation:floaty 6s ease-in-out infinite}
+.login-head h1{font-family:var(--brand);font-size:22px;font-weight:600;letter-spacing:.2em;padding-left:.2em;color:var(--navy)}
+:root[data-theme="dark"] .login-head h1{color:var(--band-ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .login-head h1{color:var(--band-ink)}}
+.login-head p{margin:0;color:var(--muted);max-width:40ch}
+.profile{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);transition:border-color .2s,transform .25s var(--ease),box-shadow .25s;animation:rise .7s var(--ease) both;animation-delay:calc(.15s + var(--i,0)*.12s);position:relative;overflow:hidden}
+.profile::after{content:"";position:absolute;top:0;bottom:0;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transform:translateX(-120%) skewX(-20deg);pointer-events:none}
+.profile:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 14px 34px rgba(10,37,65,.14)}
+.profile:hover::after{animation:glint .9s ease}
+.avatar{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:14px;flex:none;background:var(--gold-soft);color:var(--gold);font-family:var(--brand)}
+.avatar.team{background:var(--navy);color:var(--gold2)}
+.profile strong{display:block}
+.profile span{color:var(--muted);font-size:13.5px}
+.profile .go{margin-left:auto;color:var(--gold);font-size:22px;transition:transform .2s}
+.profile:hover .go{transform:translateX(4px)}
+.fine{font-size:12.5px;color:var(--muted);text-align:center;margin:0}
+
+/* ---------- App shell ---------- */
+header.band{background:linear-gradient(180deg,var(--band) 0%,var(--band2) 100%);color:var(--band-ink);position:sticky;top:env(safe-area-inset-top,0px);z-index:20;box-shadow:0 2px 14px rgba(0,0,0,.18)}
+.band-top{max-width:1160px;margin:0 auto;padding:10px 16px 4px;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand img{width:40px;height:auto;flex:none;filter:brightness(1.35)}
+.brand b{font-family:var(--brand);font-size:17px;font-weight:600;letter-spacing:.18em;white-space:nowrap}
+.brand small{display:block;font-family:var(--body);font-size:10px;letter-spacing:.22em;color:var(--gold2);font-weight:600;margin-top:-2px}
+.band-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.who{font-size:13px;color:var(--band-muted);white-space:nowrap}
+.icon-btn{position:relative;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.16);color:var(--band-ink);border-radius:9px;height:34px;min-width:34px;padding:0 10px;display:inline-grid;place-items:center;font-size:13px;transition:background .2s}
+.icon-btn:hover{background:rgba(255,255,255,.1)}
+.badge{position:absolute;top:-6px;right:-6px;background:var(--gold2);color:var(--navy2);font-size:10.5px;font-weight:700;border-radius:9px;min-width:18px;height:18px;display:grid;place-items:center;padding:0 4px;animation:popIn .5s var(--ease)}
+.tabs{max-width:1160px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:0 10px;scrollbar-width:none;position:relative}
+.tabs::-webkit-scrollbar{display:none}
+.tab{background:none;border:0;color:var(--band-muted);padding:10px 11px 12px;font-size:13.5px;font-weight:500;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;position:relative}
+.tab:hover{color:var(--band-ink)}
+.tab[aria-selected="true"]{color:var(--band-ink);border-bottom-color:var(--gold2)}
+.tab .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold2);margin-left:6px;vertical-align:middle;animation:pulse 2s infinite}
+main{max-width:1160px;margin:0 auto;padding-block:24px 72px;padding-inline:16px;display:grid;gap:20px}
+main.in>*{animation:rise .6s var(--ease) both;animation-delay:calc(var(--i,0)*70ms)}
+
+/* ---------- Blocks ---------- */
+.page-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+.page-head h1{font-family:var(--display);font-size:34px;font-weight:600;line-height:1.1}
+.page-head p{margin:4px 0 0;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0;box-shadow:var(--shadow);transition:transform .25s var(--ease),box-shadow .25s}
+.card.lift:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(10,37,65,.12)}
+.card h2{font-size:15px;font-weight:600}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.stat{background:var(--surface);padding:16px 18px;display:grid;gap:4px;position:relative;overflow:hidden}
+.stat::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.stat:hover::after{transform:scaleX(1)}
+.stat .v{font-size:24px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em;font-family:var(--mono)}
+.stat .s{font-size:12.5px;color:var(--muted)}
+.stat.key{background:linear-gradient(135deg,var(--surface),var(--gold-soft))}
+.stat.key .v{color:var(--gold)}
+
+.btn{border:1px solid transparent;background:var(--btn);color:var(--btn-ink);border-radius:9px;padding:10px 16px;font-weight:600;font-size:14px;position:relative;overflow:hidden;transition:transform .15s,filter .2s}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn.gold{background:var(--gold);color:#fff}
+:root[data-theme="dark"] .btn.gold{color:var(--navy2)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.gold{color:var(--navy2)}}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{background:var(--surface2);filter:none}
+.btn.small{padding:6px 11px;font-size:13px}
+.btn[disabled]{opacity:.5;cursor:not-allowed;transform:none}
+.link{background:none;border:0;padding:0;color:var(--gold);font-weight:600;font-size:13.5px}
+.link:hover{text-decoration:underline}
+
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.good{background:var(--good-soft);color:var(--good)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.neutral{background:var(--surface2);color:var(--muted)}
+.pill.gold{background:var(--gold-soft);color:var(--gold)}
+.pill.live::before{animation:pulse 1.6s infinite;background:var(--good)}
+.pill.live{background:var(--good-soft);color:var(--good)}
+
+.alert{display:flex;flex-wrap:wrap;align-items:center;gap:14px;border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--surface);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow)}
+.alert .txt{flex:1 1 260px;min-width:0}
+.alert strong{display:block}
+.alert span{color:var(--muted);font-size:13.5px}
+
+.list{display:grid}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line2);min-width:0;transition:background .2s}
+.row:first-child{border-top:0;padding-top:2px}
+.row .main{flex:1;min-width:0}
+.row .main strong{display:block;font-weight:600}
+.row .main span{color:var(--muted);font-size:13px}
+.row .end{text-align:right;flex:none}
+.clickable{cursor:pointer;border-radius:6px}
+.clickable:hover strong{color:var(--gold)}
+.row.new{animation:flashUp 2.4s ease}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:11px 10px;border-bottom:1px solid var(--line2);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+td.mono,.tdnum{font-family:var(--mono);font-size:13.5px}
+tbody tr.clickable:hover{background:var(--surface2)}
+tr.flash-up td{animation:flashUp 1.6s ease}
+tr.flash-down td{animation:flashDown 1.6s ease}
+
+.alloc{display:flex;height:10px;border-radius:5px;overflow:hidden;gap:2px;margin:6px 0 12px}
+.alloc i{display:block;height:100%;transform-origin:left;animation:bar 1s var(--ease) both;animation-delay:calc(var(--i,0)*80ms)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+
+.chart svg{width:100%;height:auto;display:block}
+.chart .axis{fill:var(--muted);font-size:11px;font-family:var(--body)}
+.chart .grid{stroke:var(--line2);stroke-width:1}
+.chart .line{stroke-dasharray:1400;stroke-dashoffset:1400;animation:drawLine 1.8s var(--ease) .2s forwards}
+.chart .line.dash{animation-delay:.5s}
+.chart .area{opacity:0;animation:fadeIn 1s ease 1.2s forwards}
+.chart .pt{opacity:0;animation:popIn .4s var(--ease) forwards}
+.chart .end{animation:pulse 2s infinite;border-radius:50%}
+.key-line{display:inline-block;width:18px;height:0;border-top:2px solid var(--gold);vertical-align:middle;margin-right:6px}
+.key-line.dash{border-top:2px dashed var(--muted)}
+.spark{width:90px;height:28px;display:block}
+.spark path{fill:none;stroke-width:1.6}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;transition:all .2s}
+.chip:hover{border-color:var(--gold)}
+.chip[aria-pressed="true"]{background:var(--navy);color:var(--band-ink);border-color:var(--navy)}
+
+.doc-ico{width:34px;height:40px;border:1px solid var(--line);border-radius:4px;background:var(--surface2);display:grid;place-items:center;font-size:9px;font-weight:700;color:var(--muted);flex:none;letter-spacing:.04em}
+
+.feed{display:grid;gap:14px}
+.post{display:grid;gap:6px}
+.post h3{font-family:var(--display);font-size:23px;font-weight:600}
+.post p{margin:0;max-width:68ch}
+.meta{font-size:12.5px;color:var(--muted)}
+
+.thread{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow-y:auto;padding:4px}
+.msg{max-width:78%;padding:10px 13px;border-radius:14px;font-size:14px;overflow-wrap:anywhere;animation:rise .4s var(--ease)}
+.msg.them{background:var(--surface2);border:1px solid var(--line2);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:var(--navy);color:var(--band-ink);align-self:flex-end;border-bottom-right-radius:4px}
+.msg small{display:block;opacity:.7;font-size:11px;margin-top:4px}
+.typing i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--muted);margin-right:3px;animation:floaty 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+.composer{display:flex;gap:8px;margin-top:12px}
+.composer input{flex:1;min-width:0}
+input[type=text],input[type=number],select,textarea{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:10px 12px;width:100%;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(168,145,90,.18);outline:none}
+textarea{min-height:96px;resize:vertical}
+.field{display:grid;gap:6px}
+.field label{font-size:13px;font-weight:600}
+.form{display:grid;gap:14px}
+input[type=range]{width:100%;accent-color:var(--gold)}
+
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+.svc button{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:4px;transition:all .25s var(--ease);box-shadow:var(--shadow)}
+.svc button:hover{border-color:var(--gold);transform:translateY(-2px)}
+.svc strong{font-size:14.5px}
+.svc span{font-size:13px;color:var(--muted)}
+
+.stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:10px}
+.step{display:grid;gap:5px;font-size:11.5px;color:var(--muted)}
+.step i{height:4px;border-radius:2px;background:var(--line);transform-origin:left}
+.step.done i{background:var(--good);animation:bar .6s var(--ease)}
+.step.now i{background:var(--gold);animation:bar .6s var(--ease)}
+.step.now{color:var(--ink);font-weight:600}
+.req{display:grid;gap:4px;padding:14px 0;border-top:1px solid var(--line2)}
+.req:first-child{border-top:0;padding-top:0}
+.req-top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.req-top strong{font-weight:600}
+
+.ask-out{display:grid;gap:10px;margin-top:14px}
+.qa-q{font-weight:600}
+.qa-a{background:var(--surface2);border:1px solid var(--line2);border-radius:var(--r);padding:12px 14px;max-width:70ch;animation:rise .4s var(--ease)}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px 20px}
+.fact{display:grid;gap:2px;min-width:0}
+.fact .val{font-weight:500;overflow-wrap:anywhere}
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line2)}
+.check:first-child{border-top:0}
+.check input{margin-top:4px;accent-color:var(--good);width:16px;height:16px;flex:none}
+.check.done span{color:var(--muted);text-decoration:line-through}
+.cal{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line2)}
+.cal:first-child{border-top:0;padding-top:0}
+.cal .d{font-family:var(--display);font-size:20px;font-weight:600;line-height:1.1;color:var(--gold)}
+.cal .d small{display:block;font-family:var(--body);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+
+/* Ticker */
+.ticker{overflow:hidden;background:var(--navy);color:var(--band-ink);border-radius:var(--r);padding:10px 0;position:relative;box-shadow:var(--shadow)}
+.ticker::before,.ticker::after{content:"";position:absolute;top:0;bottom:0;width:60px;z-index:1;pointer-events:none}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--navy),transparent)}
+.ticker::after{right:0;background:linear-gradient(-90deg,var(--navy),transparent)}
+.ticker-track{display:flex;gap:36px;width:max-content;animation:marquee 38s linear infinite;font-family:var(--mono);font-size:13px}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker-track span{white-space:nowrap}
+.ticker-track b{font-weight:600;margin-right:8px;color:var(--gold2)}
+
+/* Offerings */
+.offer{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0;overflow:hidden;display:grid;grid-template-rows:auto 1fr auto;box-shadow:var(--shadow);transition:transform .25s var(--ease),box-shadow .25s,border-color .2s;min-width:0}
+.offer:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(10,37,65,.14);border-color:var(--gold)}
+.offer-top{padding:16px 18px 10px;border-top:3px solid var(--gold);display:grid;gap:6px}
+.offer-top h3{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.15}
+.offer-type{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.offer-body{padding:0 18px 14px;display:grid;gap:12px;align-content:start}
+.offer-body p{margin:0;font-size:13.5px;color:var(--muted)}
+.offer-kv{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+.offer-kv div{display:grid;gap:1px}
+.offer-kv b{font-family:var(--mono);font-weight:600;font-size:14px}
+.prog{height:6px;border-radius:3px;background:var(--line2);overflow:hidden}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0;animation:growX 1.4s var(--ease) .3s forwards}
+.offer-foot{padding:12px 18px 16px;border-top:1px solid var(--line2);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.offer-foot .cap{font-size:12.5px;color:var(--muted)}
+.offer-foot .cap b{color:var(--ink);font-family:var(--mono)}
+.amount-big{font-family:var(--mono);font-size:34px;font-weight:600;letter-spacing:-.02em;color:var(--gold)}
+.quick{display:flex;gap:8px;flex-wrap:wrap}
+.review{display:grid;gap:8px;border:1px solid var(--line);border-radius:var(--r);padding:14px;background:var(--surface2)}
+.review .ln{display:flex;justify-content:space-between;gap:12px;font-size:14px}
+.review .ln b{font-family:var(--mono)}
+.sign{border:1px dashed var(--gold);border-radius:var(--r);padding:12px 14px;background:var(--gold-soft)}
+.sign input{font-family:var(--display);font-size:22px;font-style:italic;background:transparent;border:0;border-bottom:1px solid var(--gold);border-radius:0;padding:4px 0}
+.sign input:focus{box-shadow:none}
+.done-mark{width:72px;height:72px;margin:0 auto}
+.done-mark circle{fill:var(--good-soft);stroke:var(--good);stroke-width:2;stroke-dasharray:230;stroke-dashoffset:230;animation:checkDraw .8s var(--ease) forwards}
+.done-mark path{fill:none;stroke:var(--good);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:checkDraw .5s var(--ease) .6s forwards}
+.capacity{display:grid;gap:10px}
+.capbar{height:14px;border-radius:7px;background:var(--line2);overflow:hidden;display:flex}
+.capbar i{display:block;height:100%;transform-origin:left;animation:bar 1.2s var(--ease) both}
+
+/* Skeleton + live feed */
+.skel{height:14px;border-radius:6px;background:linear-gradient(90deg,var(--line2) 25%,var(--surface2) 50%,var(--line2) 75%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
+.feedlog{display:grid;gap:0;max-height:300px;overflow-y:auto}
+.feedlog .ln{display:grid;grid-template-columns:14px 1fr;gap:10px;padding:9px 0;border-top:1px solid var(--line2);font-size:13.5px;animation:rise .4s var(--ease)}
+.feedlog .ln:first-child{border-top:0}
+.feedlog .ln i{width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:6px}
+.feedlog .ln small{display:block;color:var(--muted);font-size:12px}
+
+/* Drawer */
+#scrim{position:fixed;inset:0;background:rgba(4,15,29,.5);backdrop-filter:blur(2px);z-index:30;opacity:0;pointer-events:none;transition:opacity .25s}
+#scrim.on{opacity:1;pointer-events:auto}
+#drawer{position:fixed;top:0;right:0;bottom:0;width:min(580px,100%);background:var(--surface);z-index:31;transform:translateX(100%);transition:transform .35s var(--ease);display:flex;flex-direction:column;border-left:1px solid var(--line);box-shadow:-20px 0 60px rgba(0,0,0,.2)}
+#drawer.on{transform:none}
+.dr-head{display:flex;align-items:flex-start;gap:12px;padding:calc(18px + env(safe-area-inset-top,0px)) 22px 14px;border-bottom:1px solid var(--line2)}
+.dr-head h2{font-family:var(--display);font-size:27px;font-weight:600;line-height:1.15}
+.dr-head .x{margin-left:auto;background:none;border:1px solid var(--line);border-radius:9px;width:34px;height:34px;flex:none;color:var(--ink)}
+.dr-body{padding:18px 22px calc(28px + env(safe-area-inset-bottom,0px));overflow-y:auto;display:grid;gap:18px;align-content:start}
+.dr-body>*{animation:rise .45s var(--ease) both;animation-delay:calc(var(--i,0)*60ms)}
+.dr-body p{margin:0}
+.sheet-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.sheet-stats div{background:var(--surface);padding:10px 12px;display:grid;gap:2px}
+.sheet-stats b{font-size:17px;font-family:var(--mono);font-weight:600}
+ul.ticks{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+ul.ticks li{padding-left:18px;position:relative}
+ul.ticks li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border:1.5px solid var(--gold);transform:rotate(45deg)}
+.paper{border:1px solid var(--line);border-radius:8px;background:var(--surface2);padding:22px;display:grid;gap:12px;font-size:14px;position:relative}
+.paper::before{content:"";position:absolute;top:14px;right:14px;width:34px;height:34px;background:url(__MARK__) center/contain no-repeat;opacity:.35}
+.paper h4{margin:0;font-family:var(--display);font-size:21px;font-weight:600}
+.paper .lines{display:grid;gap:6px}
+.paper .ln{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dotted var(--line);padding-bottom:4px;font-variant-numeric:tabular-nums}
+.paper .ln.total{font-weight:700;border-bottom:0}
+.flag{border:1px solid var(--warn);background:var(--warn-soft);color:var(--ink);border-radius:9px;padding:10px 12px;font-size:13.5px}
+
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--navy);color:var(--band-ink);padding:11px 18px;border-radius:10px;font-size:14px;opacity:0;transition:all .3s var(--ease);z-index:40;pointer-events:none;max-width:calc(100% - 32px);border-left:3px solid var(--gold2);box-shadow:var(--shadow)}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:640px){
+  .who{display:none}
+  .page-head h1{font-size:28px}
+  .brand b{font-size:14px;letter-spacing:.12em}
+  .msg{max-width:88%}
+  .amount-big{font-size:28px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .chart .line{stroke-dashoffset:0}.chart .area,.chart .pt{opacity:1}.prog i{width:var(--w)!important}
+}
+</style>
+
+<div id="intro" role="button" aria-label="Skip intro" tabindex="0">
+  <div class="intro-inner">
+    <div class="intro-logo">
+      <svg viewBox="0 0 300 300" aria-hidden="true"><circle class="ring" cx="150" cy="150" r="142"/><circle class="ring2" cx="150" cy="150" r="134"/></svg>
+      <img src="__LOGO__" alt="Carlisle Capital LLC">
+    </div>
+    <div class="intro-word">INVESTOR PORTAL</div>
+    <div class="intro-sub">Private · Est. 2025 · Florida</div>
+    <div class="intro-bar"><i></i></div>
+  </div>
+  <div class="intro-skip">Tap to continue</div>
+</div>
+
+<div id="login" hidden>
+  <div class="login-card">
+    <div class="login-head">
+      <img src="__LOGO__" alt="Carlisle Capital LLC">
+      <h1>INVESTOR PORTAL</h1>
+      <p>Private access for limited partners of Carlisle Capital Fund I. Choose a profile to continue.</p>
+    </div>
+    <button class="profile" style="--i:0" data-act="login" data-role="investor">
+      <div class="avatar">MH</div>
+      <div><strong>Margaret Hale</strong><span>Limited partner · Fund I</span></div>
+      <span class="go" aria-hidden="true">›</span>
+    </button>
+    <button class="profile" style="--i:1" data-act="login" data-role="team">
+      <div class="avatar team">GS</div>
+      <div><strong>George Serafin</strong><span>Managing member · Carlisle team</span></div>
+      <span class="go" aria-hidden="true">›</span>
+    </button>
+    <p class="fine">Brokerage positions are synced from Carlisle's Robinhood account. Investor names, fund figures and documents are illustrative. Nothing here moves money.</p>
+  </div>
+</div>
+
+<div id="app" hidden>
+  <div class="demo">Demo portal · Fund figures and investor records are illustrative · Public markets data is live from Robinhood</div>
+  <header class="band">
+    <div class="band-top">
+      <div class="brand">
+        <img src="__MARK__" alt="">
+        <div><b>CARLISLE CAPITAL</b><small>INVESTOR PORTAL</small></div>
+      </div>
+      <div class="band-actions">
+        <span class="who" id="who"></span>
+        <button class="icon-btn" data-act="notifs" aria-label="Notifications" id="bell">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        </button>
+        <button class="icon-btn" data-act="switch">Switch</button>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Sections"></nav>
+  </header>
+  <main id="main"></main>
+</div>
+
+<div id="scrim" data-act="close"></div>
+<aside id="drawer" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="drTitle">
+  <div class="dr-head"><div><div class="label" id="drEyebrow"></div><h2 id="drTitle"></h2></div><button class="x" data-act="close" aria-label="Close">✕</button></div>
+  <div class="dr-body" id="drBody"></div>
+</aside>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+const $ = s => document.querySelector(s);
+const fmt = n => (n<0?'-':'')+'$' + Math.round(Math.abs(n)).toLocaleString('en-US');
+const fmt2 = n => (n<0?'-':'')+'$' + Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const pct = n => (n>=0?'+':'')+n.toFixed(2)+'%';
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const today = () => new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+const nowTime = () => new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+const ago = iso => {const d=(Date.now()-new Date(iso))/60000; if(d<1)return 'just now'; if(d<60)return Math.round(d)+' min ago'; if(d<1440)return Math.round(d/60)+' hr ago'; return Math.round(d/1440)+' days ago';};
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- Fund data (illustrative) ---------- */
+const FUND = {name:'Carlisle Capital Fund I', asOf:'Sep 30, 2026'};
+const INVESTOR = {id:'hale', name:'Margaret Hale', first:'Margaret', commit:250000, capacity:400000};
+const SHARE = 0.25;
+const COLORS = ['#0A2541','#A8915A','#2F5F8A','#6E5A8C','#4E7A4A','#9A5A3E','#5A6A7A','#C4AD75'];
+
+const VENTURES = [
+ {id:'continental', name:'Continental Firearms', sector:'Firearms accessories', stage:'Product development', tone:'gold', cost:45000, val:54000,
+  blurb:'Historical and specialty firearms accessories: conversion cylinders, extended magazines for historical platforms, revolver speed loaders and paper cartridge kits.',
+  kpis:[['Concepts scoped','45'],['Patent targets','3']],
+  done:['Product board of 45 concepts ranked by startup capital and time to first sale','Regulatory scoping completed before each product advances','Engineering and design lead in place'],
+  next:'Founder agreement, first prototype tooling (funded by Call No. 4), provisional patent filings.', hist:[45000,45000,47500,51000,54000]},
+ {id:'nexus', name:'Nexus', sector:'Consumer social app', stage:'Building to beta', tone:'gold', cost:30000, val:33000,
+  blurb:'One home for real friend groups: chat, plans, shared calendars, bill splitting and finding new people. Gaming crews are an early use case.',
+  kpis:[['Build phase','Chat'],['Beta','Private']],
+  done:['Rebranded from Roundtable with a space theme','Build order set: chat, then groups, then discovery','Landing page and live demo in progress'],
+  next:'Private beta with founding friend groups (funded by Call No. 4).', hist:[0,0,30000,31000,33000]},
+ {id:'astraeus', name:'ASTRAEUS', sector:'Space lifestyle brand', stage:'Storefront live', tone:'good', cost:25000, val:27500,
+  blurb:'Space exploration gear and apparel: watches, protective cases, field gear and mission collections grounded in NASA era engineering.',
+  kpis:[['Collections','6'],['Storefront','Live']],
+  done:['Brand identity and circular mark complete','Ecommerce storefront built and published','Six mission collections defined, from Lunar to Earthside'],
+  next:'First collection drop and launch content.', hist:[0,0,25000,25500,27500]},
+ {id:'oggames', name:'Old Glory Games', sector:'Strategy games', stage:'In development', tone:'gold', cost:20000, val:22400,
+  blurb:'Developer of World at War: Commander, a WWII grand strategy game. Held as a 50/50 joint venture.',
+  kpis:[['Research nodes','309'],['Production items','273']],
+  done:['309 node US research tree','273 item production system','103 division formation master'],
+  next:'Playable vertical slice.', hist:[20000,20400,21000,21800,22400]},
+ {id:'aim', name:'AIM', full:'Artemis Investment Metrics', sector:'Fintech', stage:'Design', tone:'neutral', cost:15000, val:15000,
+  blurb:'Artemis Investment Metrics: one platform for personal finance intelligence, investing and asset management.',
+  kpis:[['Stage','Design'],['Site','In build']],
+  done:['Name and brand system set','Product scope defined across planning, investing and asset management'],
+  next:'Marketing site and waitlist.', hist:[0,0,15000,15000,15000]},
+ {id:'ogarchives', name:'Old Glory Archives', sector:'History media', stage:'Live, monetized', tone:'good', cost:10000, val:14500,
+  blurb:'WWII history content brand publishing short form video on TikTok, earning through the Creator Rewards program.',
+  kpis:[['Post views','5.4M+'],['Core audience','93% male']],
+  done:['5.4 million post views','Monetized through Creator Rewards'],
+  next:'Expand to YouTube Shorts and feed traffic to Old Glory Publishing.', hist:[10000,10400,11500,13000,14500]},
+ {id:'ogpub', name:'Old Glory Publishing', sector:'Nonfiction books', stage:'Manuscript', tone:'neutral', cost:5000, val:5000,
+  blurb:'Publisher of The United States in World War II: By the Numbers, a data only reference to America at war.',
+  kpis:[['Titles','1'],['Format','Reference']],
+  done:['Strict data only writing framework set','Manuscript underway'],
+  next:'Complete manuscript and plan the first print run.', hist:[0,5000,5000,5000,5000]}
+];
+const PIPELINE = [
+ {name:'Adonis', sector:'Watches', note:'Quartz watch with a hidden wellness tracker, inspired by Apollo era design.'},
+ {name:'Project Arma', sector:'Market data', note:'Going rate prices for firearms and ammunition from real sold listings.'},
+ {name:'Iron & Oak', sector:'Fitness equipment', note:'WWII inspired strength equipment with aircraft nose art liveries.'}
+];
+const HISTORY = [
+ {q:'Q3 2025',paid:50000,val:50000},{q:'Q4 2025',paid:50000,val:50800},
+ {q:'Q1 2026',paid:100000,val:103200},{q:'Q2 2026',paid:150000,val:158900},{q:'Q3 2026',paid:150000,val:171400}];
+const PAID = VENTURES.reduce((a,v)=>a+v.cost,0);
+const VALUE = VENTURES.reduce((a,v)=>a+v.val,0);
+const TVPI = VALUE/PAID;
+
+const CALLS = [
+ {no:1,date:'Sep 15, 2025',pct:0.20,purpose:'Initial deployment across seven ventures'},
+ {no:2,date:'Jan 15, 2026',pct:0.20,purpose:'Continental design work, Old Glory Games production system'},
+ {no:3,date:'Jun 15, 2026',pct:0.20,purpose:'ASTRAEUS storefront, Nexus build, AIM brand'},
+ {no:4,date:'Nov 14, 2026',pct:0.16,purpose:'Continental prototype tooling (60%) and Nexus private beta (40%)',open:true}];
+
+const LPS = [
+ {id:'hale',name:'Margaret Hale',type:'Individual',commit:250000},
+ {id:'whitcomb',name:'Thomas Whitcomb',type:'Individual',commit:150000},
+ {id:'duarte',name:'Elena Duarte',type:'Trust',commit:100000},
+ {id:'harbor',name:'Harbor Oak Family Office',type:'Family office',commit:500000}];
+
+const OFFERS = [
+ {id:'fund1', name:'Fund I Additional Commitment', type:'Fund interest', min:25000, step:5000, target:1000000, raised:800000, close:'Dec 31, 2026', term:'Called over 24 months', ret:'Pro rata across every Carlisle venture', risk:'High', fee:'1.5% mgmt · 20% carry over 8% pref',
+  desc:'Increase your Fund I commitment ahead of the final close. New commitments are called on the same schedule as existing ones.'},
+ {id:'continental', name:'Continental Firearms Direct', type:'Direct equity · SAFE', min:10000, step:5000, target:150000, raised:62500, close:'Nov 30, 2026', term:'Converts at priced round', ret:'Equity in Continental Firearms LLC', risk:'High', fee:'No fund fees',
+  desc:'A direct stake in the most developed venture. Proceeds fund prototype tooling and the first production run of revolver speed loaders.'},
+ {id:'nexus', name:'Nexus Seed Note', type:'Convertible note', min:5000, step:1000, target:100000, raised:35000, close:'Jan 15, 2027', term:'24 months · 6% · 20% discount', ret:'Converts to Nexus equity', risk:'Very high', fee:'No fund fees',
+  desc:'Funds the private beta and the first six months of hosting and growth for the Nexus friend group app.'},
+ {id:'astraeus', name:'ASTRAEUS Inventory Facility', type:'Revenue share', min:2500, step:500, target:50000, raised:18000, close:'Rolling', term:'12 months', ret:'1.25x return of capital from sales', risk:'Medium', fee:'No fund fees',
+  desc:'Short term capital for the first ASTRAEUS product drop. Repaid from storefront revenue, 8% of gross sales until 1.25x is returned.'},
+ {id:'public', name:'Public Markets Sleeve', type:'Managed brokerage sleeve', min:5000, step:1000, target:250000, raised:0, close:'Open', term:'Liquid · 30 day notice', ret:'Equities, agent managed, reported live', risk:'Medium', fee:'0.75% annual',
+  desc:'Capital added to the Carlisle brokerage account you see on the Public Markets tab, managed by the Carlisle agent and synced from Robinhood.'},
+ {id:'oggames', name:'Old Glory Games Co-Production', type:'Revenue share', min:10000, step:5000, target:75000, raised:20000, close:'Feb 28, 2027', term:'Until 2x returned', ret:'15% of net game revenue', risk:'High', fee:'No fund fees',
+  desc:'Finishes the playable vertical slice of World at War: Commander and funds a Steam page and first trailer.'}
+];
+
+const DOCS = [
+ {id:'q3letter',title:'Q3 2026 Quarterly Letter',cat:'Reports',date:'Oct 1, 2026',kind:'letter'},
+ {id:'call4',title:'Capital Call Notice No. 4',cat:'Capital calls',date:'Oct 7, 2026',kind:'call'},
+ {id:'cas3',title:'Q3 2026 Capital Account Statement',cat:'Statements',date:'Oct 1, 2026',kind:'cas',lines:[['Beginning balance, Jul 1',158900],['Contributions',0],['Change in value',12500],['Distributions',0]],end:171400},
+ {id:'cas2',title:'Q2 2026 Capital Account Statement',cat:'Statements',date:'Jul 1, 2026',kind:'cas',lines:[['Beginning balance, Apr 1',103200],['Contributions (Call No. 3)',50000],['Change in value',5700],['Distributions',0]],end:158900},
+ {id:'k1',title:'2025 K1 Tax Package',cat:'Tax',date:'Mar 12, 2026',kind:'tax'},
+ {id:'ppm',title:'Fund I Private Placement Memorandum',cat:'Legal',date:'Aug 29, 2025',kind:'ppm'},
+ {id:'sub',title:'Subscription Agreement',cat:'Legal',date:'Aug 29, 2025',kind:'sub'},
+ {id:'overview',title:'Fund I Overview',cat:'Reports',date:'Sep 2, 2025',kind:'overview'}];
+
+/* ---------- State ---------- */
+const S = {
+  role:null, tab:null, docFilter:'All',
+  call4:{hale:'open',whitcomb:'paid',duarte:'open',harbor:'paid'},
+  requests:[
+    {id:1,by:'Margaret Hale',type:'Request a document',detail:'Please resend the 2025 K1 tax package to my accountant.',status:2,date:'Oct 2, 2026'},
+    {id:2,by:'Thomas Whitcomb',type:'Schedule a call',detail:'Would like 30 minutes on the Continental tooling plan before funding Call No. 4.',status:0,date:'Oct 6, 2026'}],
+  pledges:[
+    {id:'p1',by:'Harbor Oak Family Office',offer:'continental',amount:50000,status:3,date:'Sep 28, 2026'},
+    {id:'p2',by:'Thomas Whitcomb',offer:'nexus',amount:15000,status:1,date:'Oct 5, 2026'}],
+  updates:[
+    {title:'Q3 letter: Fund I value up 7.9% for the quarter',venture:'Fund I',date:'Oct 1, 2026',ts:1759300000000,body:'Fund value rose from $158,900 to $171,400 on your interest, led by Continental Firearms and Old Glory Archives. Capital Call No. 4 funds Continental prototype tooling and the Nexus private beta. The full letter is in Documents.'},
+    {title:'ASTRAEUS storefront is live',venture:'ASTRAEUS',date:'Sep 18, 2026',ts:1758200000000,body:'The ASTRAEUS store is published with six mission collections. The first product drop is being planned now.'},
+    {title:'Old Glory Archives passes 5 million views',venture:'Old Glory Archives',date:'Aug 21, 2026',ts:1755800000000,body:'The channel passed 5.4 million post views and is monetized through TikTok Creator Rewards. Next step is cross posting to YouTube Shorts.'}],
+  messages:[
+    {from:'them',text:'Margaret, the Q3 letter and your capital account statement are posted. Happy to walk through Call No. 4 any time.',time:'Oct 1, 9:12 AM'},
+    {from:'me',text:'Thanks George. Is the Continental tooling on schedule?',time:'Oct 1, 2:40 PM'},
+    {from:'them',text:'Yes. Tooling quotes are in and the first prototype run is planned for December.',time:'Oct 1, 3:05 PM'}],
+  notifs:{investor:[{t:'Capital Call No. 4 issued: $40,000 due Nov 14',d:'Oct 7, 2026'},{t:'Six offerings are open for additional investment',d:'Oct 7, 2026'}],team:[{t:'Thomas Whitcomb asked to schedule a call',d:'Oct 6, 2026'}]},
+  unseen:{investor:2,team:1},
+  askLog:[], einShown:false,
+  checks:{oa:false,exa:false,ss4:false,bank:false,addr:false,founder:false},
+  bk:null, bkPrev:null, feed:[], dbUpdates:[], dbPledges:[]
+};
+let nextId = 3;
+const STATUS = ['Received','In review','In progress','Complete'];
+const PSTATUS = ['Received','Docs sent','Countersigned','Funded'];
+const offerById = id => OFFERS.find(o=>o.id===id);
+const pledgedBy = name => S.pledges.filter(p=>p.by===name).reduce((a,p)=>a+p.amount,0);
+const raisedFor = o => o.raised + S.pledges.filter(p=>p.offer===o.id).reduce((a,p)=>a+p.amount,0) + (o.id==='public'&&S.bk?S.bk.totalValue:0);
+
+function notify(role,t){S.notifs[role].unshift({t,d:today()});S.unseen[role]++;}
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('on'),2800);}
+
+/* ---------- Capabilities: db, user, sample ---------- */
+let db=null, uid=null, canWrite=false, sample=null;
+(async()=>{
+  try{
+    const [d,u,sm]=await Promise.all([claude?.use?.('db'),claude?.use?.('user'),claude?.use?.('sample')].map(p=>Promise.resolve(p).catch(()=>null)));
+    sample=sm||null;
+    if(u){ try{uid=await u.id();}catch{} try{canWrite=(await u.can('data.write'))!==false;}catch{} }
+    if(d){
+      db=d;
+      d.doc('shared/brokerage').onSnapshot(s=>{ if(s.exists){ applyBrokerage(s.data(),'live'); } },()=>{});
+      d.doc('shared/feed').onSnapshot(s=>{ if(s.exists&&Array.isArray(s.data().items)){S.feed=s.data().items; if(S.tab==='markets'||S.tab==='t-brokerage'||S.tab==='overview'||S.tab==='t-overview')softRender();} },()=>{});
+      d.collection('updates').orderBy('ts','desc').limit(50).onSnapshot(s=>{ S.dbUpdates=s.docs.map(x=>x.data()); if(['updates','overview','t-overview'].includes(S.tab))softRender(); },()=>{});
+      d.collection('pledges').onSnapshot(s=>{ const arr=[]; s.docs.forEach(x=>{(x.data().items||[]).forEach(it=>arr.push(it));}); S.dbPledges=arr; if(['t-subs','t-overview','invest'].includes(S.tab))softRender(); },()=>{});
+    }
+  }catch{}
+})();
+/* Snapshot file fallback (GitHub Pages and artifact supporting file) */
+fetch('data/brokerage.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{ if(j&&!S.bk) applyBrokerage(j,'file'); }).catch(()=>{});
+
+function applyBrokerage(bk,src){
+  S.bkPrev=S.bk; S.bk=bk; S.bkSrc=src;
+  if(Array.isArray(bk.feed)&&!S.feed.length) S.feed=bk.feed;
+  if(['markets','t-brokerage','overview','t-overview','invest'].includes(S.tab)) softRender();
+}
+function allUpdates(){ const seen=new Set(); return [...S.dbUpdates,...S.updates].filter(u=>{const k=u.title+u.date; if(seen.has(k))return false; seen.add(k); return true;}).sort((a,b)=>(b.ts||0)-(a.ts||0)); }
+function allPledges(){ return [...S.dbPledges,...S.pledges]; }
+
+/* ---------- Brokerage math ---------- */
+function bkCalc(bk){
+  const pos=bk.positions.map(p=>{const mv=p.qty*p.price, cost=p.qty*p.avg, prev=p.qty*p.prevClose; return {...p,mv,cost,pl:mv-cost,plPct:cost?(mv-cost)/cost*100:0,day:mv-prev,dayPct:prev?(mv-prev)/prev*100:0};}).sort((a,b)=>b.mv-a.mv);
+  const mv=pos.reduce((a,p)=>a+p.mv,0), cost=pos.reduce((a,p)=>a+p.cost,0), day=pos.reduce((a,p)=>a+p.day,0), prev=pos.reduce((a,p)=>a+p.qty*p.prevClose,0);
+  return {pos,mv,cost,day,dayPct:prev?day/prev*100:0,pl:mv-cost,plPct:cost?(mv-cost)/cost*100:0,total:bk.totalValue||mv+(bk.cash||0)};
+}
+function spark(vals,cls){
+  if(!vals||vals.length<2)return '';
+  const W=90,H=28,mn=Math.min(...vals),mx=Math.max(...vals),r=mx-mn||1;
+  const pts=vals.map((v,i)=>`${(i/(vals.length-1))*W},${H-3-((v-mn)/r)*(H-6)}`).join(' ');
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${cls==='down'?'var(--bad)':'var(--good)'}" stroke-width="1.6"/></svg>`;
+}
+
+/* ---------- Intro ---------- */
+const intro=$('#intro');
+function endIntro(){if(intro.classList.contains('out'))return;intro.classList.add('out');$('#login').hidden=false;setTimeout(()=>intro.remove(),800);}
+intro.addEventListener('click',endIntro);
+intro.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')endIntro();});
+setTimeout(endIntro, reduced?300:3600);
+
+/* ---------- Shell ---------- */
+const TABS = {
+ investor:[['overview','Overview'],['portfolio','Portfolio'],['markets','Public markets'],['invest','Invest'],['calls','Capital calls'],['documents','Documents'],['updates','Updates'],['messages','Messages'],['concierge','Concierge'],['ask','Ask Carlisle']],
+ team:[['t-overview','Overview'],['t-brokerage','Brokerage'],['t-subs','Subscriptions'],['t-requests','Requests'],['t-calls','Capital calls'],['t-investors','Investors'],['t-publish','Publish update'],['t-entity','Entity & compliance']]
+};
+function login(role){
+  S.role=role; S.tab=TABS[role][0][0];
+  $('#login').hidden=true; $('#app').hidden=false;
+  $('#who').textContent = role==='investor' ? 'Margaret Hale · Limited partner' : 'George Serafin · Managing member';
+  render(); window.scrollTo(0,0);
+}
+function renderTabs(){
+  $('#tabs').innerHTML = TABS[S.role].map(([id,label])=>{
+    let dot='';
+    if(id==='calls'&&S.call4.hale==='open')dot='<span class="dot" aria-label="action needed"></span>';
+    if(id==='invest'&&S.role==='investor')dot='<span class="dot" aria-label="open offerings"></span>';
+    if(id==='t-requests'&&S.requests.some(r=>r.status===0))dot='<span class="dot" aria-label="new"></span>';
+    if(id==='t-subs'&&allPledges().some(r=>r.status===0))dot='<span class="dot" aria-label="new"></span>';
+    return `<button class="tab" role="tab" aria-selected="${S.tab===id}" data-act="tab" data-tab="${id}">${label}${dot}</button>`;
+  }).join('');
+  const n=S.unseen[S.role];
+  $('#bell').innerHTML = $('#bell').innerHTML.replace(/<span class="badge">.*?<\/span>/,'') + (n?`<span class="badge">${n}</span>`:'');
+}
+function stagger(root){ [...root.children].forEach((el,i)=>el.style.setProperty('--i',i)); }
+function countUp(root){
+  if(reduced)return;
+  root.querySelectorAll('[data-count]').forEach(el=>{
+    const end=parseFloat(el.dataset.count), kind=el.dataset.kind||'money', dur=900, t0=performance.now();
+    const f=v=> kind==='money'?fmt(v): kind==='money2'?fmt2(v): kind==='x'?v.toFixed(2)+'x': kind==='pct'?pct(v): Math.round(v).toLocaleString();
+    const step=t=>{const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); el.textContent=f(end*e); if(k<1)requestAnimationFrame(step); else el.textContent=f(end);};
+    requestAnimationFrame(step);
+  });
+}
+function render(){
+  renderTabs();
+  const m=$('#main'); m.classList.remove('in'); m.innerHTML = VIEWS[S.tab](); stagger(m); void m.offsetWidth; m.classList.add('in'); countUp(m);
+  if(S.tab==='messages'){const th=$('#thread');if(th)th.scrollTop=th.scrollHeight;}
+}
+function softRender(){ /* re-render without entrance animation and without resetting counters */
+  renderTabs(); const m=$('#main'); const y=window.scrollY; m.innerHTML=VIEWS[S.tab](); stagger(m); window.scrollTo(0,y);
+}
+
+/* ---------- Shared bits ---------- */
+const pill=(t,tone)=>`<span class="pill ${tone}">${esc(t)}</span>`;
+const callPill=s=>s==='paid'?pill('Paid','good'):s==='pending'?pill('Wire sent, confirming','warn'):pill('Due Nov 14','bad');
+function stepper(st,labels=STATUS){return `<div class="stepper">${labels.map((l,i)=>`<div class="step ${i<st?'done':i===st?(st===3?'done':'now'):''}"><i></i>${l}</div>`).join('')}</div>`;}
+function greet(){const h=new Date().getHours();return h<12?'Good morning':h<18?'Good afternoon':'Good evening';}
+const livePill=()=>S.bk?`<span class="pill live">Live · ${ago(S.bk.asOf)}</span>`:`<span class="pill neutral">Connecting</span>`;
+
+function chart(){
+  const W=640,H=240,L=58,R=620,T=26,B=196,max=200000;
+  const x=i=>L+(R-L)*i/(HISTORY.length-1), y=v=>B-(B-T)*v/max;
+  const ticks=[0,50000,100000,150000,200000];
+  const grid=ticks.map(t=>`<line class="grid" x1="${L}" x2="${R}" y1="${y(t)}" y2="${y(t)}"/><text class="axis" x="${L-8}" y="${y(t)+4}" text-anchor="end">${t?'$'+t/1000+'k':'$0'}</text>`).join('');
+  const xl=HISTORY.map((h,i)=>`<text class="axis" x="${x(i)}" y="${B+22}" text-anchor="${i===0?'start':i===HISTORY.length-1?'end':'middle'}">${h.q}</text>`).join('');
+  const vp=HISTORY.map((h,i)=>`${x(i)},${y(h.val)}`).join(' ');
+  const pp=HISTORY.map((h,i)=>`${x(i)},${y(h.paid)}`).join(' ');
+  const area=`${L},${B} ${vp} ${R},${B}`;
+  const last=HISTORY[HISTORY.length-1];
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Paid in capital versus value by quarter, ending at ${fmt(last.val)} value on ${fmt(last.paid)} paid in">
+  ${grid}${xl}
+  <polygon class="area" points="${area}" fill="var(--gold)" opacity=".14"/>
+  <polyline class="line dash" points="${pp}" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 5"/>
+  <polyline class="line" points="${vp}" fill="none" stroke="var(--gold)" stroke-width="2.5" stroke-linejoin="round"/>
+  ${HISTORY.map((h,i)=>`<circle class="pt ${i===HISTORY.length-1?'end':''}" style="animation-delay:${.3+i*.3}s" cx="${x(i)}" cy="${y(h.val)}" r="${i===HISTORY.length-1?5:3}" fill="var(--gold)" stroke="var(--surface)" stroke-width="2"/>`).join('')}
+  <text x="${R}" y="${y(last.val)-12}" text-anchor="end" fill="var(--ink)" font-size="13" font-weight="700" font-family="IBM Plex Mono, monospace">${fmt(last.val)}</text>
+  </svg></div>`;
+}
+function allocBar(list,key,nameKey='name'){
+  const tot=list.reduce((a,v)=>a+v[key],0)||1;
+  return `<div class="alloc" role="img" aria-label="Allocation">${list.map((v,i)=>`<i style="--i:${i};width:${(v[key]/tot*100).toFixed(2)}%;background:${COLORS[i%COLORS.length]}" title="${esc(v[nameKey])}"></i>`).join('')}</div>
+  <div class="legend">${list.map((v,i)=>`<span><i style="background:${COLORS[i%COLORS.length]}"></i>${esc(v[nameKey])} ${(v[key]/tot*100).toFixed(0)}%</span>`).join('')}</div>`;
+}
+function ticker(){
+  if(!S.bk)return '';
+  const c=bkCalc(S.bk);
+  const items=c.pos.map(p=>`<span><b>${esc(p.symbol)}</b>${fmt2(p.price)} <span class="${p.dayPct>=0?'up':'down'}">${pct(p.dayPct)}</span></span>`).join('');
+  const head=`<span><b>CARLISLE SLEEVE</b>${fmt2(c.total)} <span class="${c.dayPct>=0?'up':'down'}">${pct(c.dayPct)} today</span></span>`;
+  return `<div class="ticker" aria-label="Live prices"><div class="ticker-track">${head}${items}${head}${items}</div></div>`;
+}
+function feedLog(limit=8){
+  const items=S.feed.slice(0,limit);
+  if(!items.length)return '<p class="meta">No agent activity yet.</p>';
+  return `<div class="feedlog">${items.map(f=>`<div class="ln"><i></i><div>${esc(f.text)}<small>${new Date(f.t).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</small></div></div>`).join('')}</div>`;
+}
+function marketsBlock(forInvestor){
+  if(!S.bk)return `<div class="card"><div class="card-head"><h2>Public markets sleeve</h2>${livePill()}</div><div style="display:grid;gap:10px"><div class="skel" style="width:60%"></div><div class="skel"></div><div class="skel" style="width:80%"></div></div></div>`;
+  const c=bkCalc(S.bk);
+  const share=forInvestor?SHARE:1;
+  return `<div class="card lift"><div class="card-head"><h2>Public markets sleeve</h2>${livePill()}</div>
+    <div class="list">${c.pos.slice(0,5).map(p=>`<div class="row"><div class="main"><strong class="mono">${esc(p.symbol)}</strong><span>${esc(p.name||'')}</span></div>${spark(fakeSpark(p),p.dayPct>=0?'up':'down')}<div class="end num"><div class="mono">${fmt(p.mv*share)}</div><span class="meta ${p.dayPct>=0?'up':'down'}">${pct(p.dayPct)}</span></div></div>`).join('')}</div>
+    <div class="chips" style="margin-top:12px"><button class="link" data-act="tab" data-tab="${forInvestor?'markets':'t-brokerage'}">Full sleeve</button></div></div>`;
+}
+function fakeSpark(p){ /* deterministic path from avg to price for a sparkline shape */
+  const n=12, out=[]; let seed=p.symbol.split('').reduce((a,ch)=>a+ch.charCodeAt(0),0);
+  for(let i=0;i<n;i++){ seed=(seed*9301+49297)%233280; const r=seed/233280-.5; out.push(p.avg+(p.price-p.avg)*(i/(n-1))+r*Math.abs(p.price-p.avg||p.price*.05)*.6); }
+  out[n-1]=p.price; return out;
+}
+
+/* ---------- Investor views ---------- */
+const VIEWS = {};
+VIEWS.overview=()=>{
+  const due=S.call4.hale; const u=allUpdates()[0];
+  return `<div class="page-head"><div><h1>${greet()}, ${INVESTOR.first}</h1><p>${FUND.name} · values as of ${FUND.asOf} · public markets live</p></div><div class="chips"><button class="btn gold" data-act="tab" data-tab="invest">Invest more</button></div></div>
+  ${ticker()}
+  ${due!=='paid'?`<div class="alert"><div class="txt"><strong>${due==='open'?'Capital Call No. 4 · $40,000 due Nov 14, 2026':'Wire for Call No. 4 marked sent, awaiting confirmation'}</strong><span>${due==='open'?'Funds Continental prototype tooling and the Nexus private beta.':'The Carlisle team will confirm receipt and update your account.'}</span></div><button class="btn" data-act="tab" data-tab="calls">View call</button></div>`:''}
+  <div class="stats">
+    <div class="stat"><span class="label">Commitment</span><span class="v" data-count="${INVESTOR.commit}">$0</span><span class="s">Fund I, vintage 2025</span></div>
+    <div class="stat"><span class="label">Paid in</span><span class="v" data-count="${PAID}">$0</span><span class="s">${Math.round(PAID/INVESTOR.commit*100)}% of commitment called</span></div>
+    <div class="stat key"><span class="label">Current value</span><span class="v" data-count="${VALUE}">$0</span><span class="s">+${fmt(VALUE-PAID)} on cost</span></div>
+    <div class="stat"><span class="label">TVPI</span><span class="v" data-count="${TVPI}" data-kind="x">0.00x</span><span class="s">Value ÷ paid in</span></div>
+    <div class="stat"><span class="label">Public sleeve, your share</span><span class="v" data-count="${S.bk?bkCalc(S.bk).total*SHARE:0}">$0</span><span class="s">${S.bk?pct(bkCalc(S.bk).dayPct)+' today':'syncing'}</span></div>
+  </div>
+  <div class="grid2">
+    <div class="card lift"><div class="card-head"><h2>Value over time</h2><div class="legend"><span><i class="key-line"></i>Value</span><span><i class="key-line dash"></i>Paid in</span></div></div>${chart()}</div>
+    ${marketsBlock(true)}
+  </div>
+  <div class="grid2">
+    <div class="card lift"><div class="card-head"><h2>Your private holdings</h2><button class="link" data-act="tab" data-tab="portfolio">All holdings</button></div>
+      <div class="list">${VENTURES.slice(0,5).map(v=>`<div class="row clickable" data-act="sheet" data-id="${v.id}"><div class="main"><strong>${esc(v.name)}</strong><span>${esc(v.sector)}</span></div>${spark(v.hist.filter(x=>x>0),'up')}<div class="end num"><div class="mono">${fmt(v.val)}</div><span class="meta">${(v.val/v.cost).toFixed(2)}x</span></div></div>`).join('')}</div></div>
+    <div class="card lift"><div class="card-head"><h2>Latest from Carlisle</h2><button class="link" data-act="tab" data-tab="updates">All updates</button></div>
+      <div class="post"><span class="meta">${esc(u.date)} · ${esc(u.venture)}</span><h3>${esc(u.title)}</h3><p>${esc(u.body)}</p></div>
+      <div style="margin-top:14px"><div class="label" style="margin-bottom:6px">Agent activity</div>${feedLog(3)}</div></div>
+  </div>`;
+};
+VIEWS.portfolio=()=>`<div class="page-head"><div><h1>Portfolio</h1><p>${VENTURES.length} private holdings · your share of Fund I is ${SHARE*100}%</p></div></div>
+  <div class="card"><div class="card-head"><h2>Allocation by cost</h2><span class="meta num">${fmt(PAID)} invested</span></div>${allocBar(VENTURES,'cost')}</div>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>Venture</th><th>Stage</th><th>Trend</th><th class="r">Cost</th><th class="r">Value</th><th class="r">Multiple</th></tr></thead><tbody>
+  ${VENTURES.map(v=>`<tr class="clickable" data-act="sheet" data-id="${v.id}" tabindex="0"><td><strong>${esc(v.name)}</strong><div class="meta">${esc(v.sector)}</div></td><td>${pill(v.stage,v.tone)}</td><td>${spark(v.hist.filter(x=>x>0),'up')}</td><td class="r mono">${fmt(v.cost)}</td><td class="r mono">${fmt(v.val)}</td><td class="r mono">${(v.val/v.cost).toFixed(2)}x</td></tr>`).join('')}
+  <tr><td><strong>Total</strong></td><td></td><td></td><td class="r mono"><strong>${fmt(PAID)}</strong></td><td class="r mono"><strong>${fmt(VALUE)}</strong></td><td class="r mono"><strong>${TVPI.toFixed(2)}x</strong></td></tr>
+  </tbody></table></div></div>
+  <div class="card"><div class="card-head"><h2>Pipeline</h2><span class="meta">Held at Carlisle, not yet funded by Fund I</span></div>
+  <div class="list">${PIPELINE.map(p=>`<div class="row"><div class="main"><strong>${esc(p.name)}</strong><span>${esc(p.note)}</span></div><div class="end">${pill(p.sector,'neutral')}</div></div>`).join('')}</div></div>`;
+
+VIEWS.markets=()=>marketsPage(true);
+function marketsPage(forInvestor){
+  if(!S.bk)return `<div class="page-head"><div><h1>Public markets</h1><p>Syncing the Carlisle brokerage account</p></div></div><div class="card"><div style="display:grid;gap:12px"><div class="skel" style="width:40%"></div><div class="skel"></div><div class="skel"></div><div class="skel" style="width:70%"></div></div></div>`;
+  const c=bkCalc(S.bk), share=forInvestor?SHARE:1, acct=S.bk.account||{};
+  return `<div class="page-head"><div><h1>${forInvestor?'Public markets':'Brokerage'}</h1><p>Carlisle brokerage sleeve · ${esc(S.bk.source||'Robinhood')} · ${esc(acct.type||'')} account ending ${esc(acct.last4||'')}${forInvestor?' · your share '+SHARE*100+'%':''}</p></div>${livePill()}</div>
+  ${ticker()}
+  <div class="stats">
+    <div class="stat key"><span class="label">${forInvestor?'Your share of sleeve':'Account value'}</span><span class="v" data-count="${c.total*share}" data-kind="money2">$0.00</span><span class="s">${forInvestor?'of '+fmt2(c.total)+' total':'equities plus cash'}</span></div>
+    <div class="stat"><span class="label">Today</span><span class="v ${c.day>=0?'up':'down'}" data-count="${c.day*share}" data-kind="money2">$0.00</span><span class="s ${c.dayPct>=0?'up':'down'}">${pct(c.dayPct)}</span></div>
+    <div class="stat"><span class="label">Open P&amp;L</span><span class="v ${c.pl>=0?'up':'down'}" data-count="${c.pl*share}" data-kind="money2">$0.00</span><span class="s ${c.plPct>=0?'up':'down'}">${pct(c.plPct)} on cost</span></div>
+    <div class="stat"><span class="label">Cash</span><span class="v" data-count="${(S.bk.cash||0)*share}" data-kind="money2">$0.00</span><span class="s">Buying power</span></div>
+    <div class="stat"><span class="label">Positions</span><span class="v" data-count="${c.pos.length}" data-kind="int">0</span><span class="s">Updated ${ago(S.bk.asOf)}</span></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="card-head"><h2>Allocation</h2><span class="meta num">${fmt2(c.mv*share)} invested</span></div>${allocBar(c.pos,'mv','symbol')}</div>
+    <div class="card"><div class="card-head"><h2>Agent activity</h2><span class="pill gold">Carlisle agent</span></div>${feedLog(6)}
+      <p class="meta" style="margin:10px 0 0">The Carlisle agent reads the account on a schedule, prices every position and publishes this page for every investor at once. Source: ${esc(S.bk.source||'Robinhood')}, ${S.bkSrc==='live'?'live store':'last published snapshot'}.</p></div>
+  </div>
+  <div class="card"><div class="card-head"><h2>Positions</h2><span class="meta">Prices as of ${new Date(S.bk.asOf).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</span></div>
+  <div class="table-wrap"><table><thead><tr><th>Symbol</th><th>Trend</th><th class="r">Shares</th><th class="r">Avg cost</th><th class="r">Price</th><th class="r">Today</th><th class="r">Market value</th><th class="r">P&amp;L</th></tr></thead><tbody>
+  ${c.pos.map(p=>`<tr><td><strong class="mono">${esc(p.symbol)}</strong><div class="meta">${esc(p.name||'')}</div></td><td>${spark(fakeSpark(p),p.dayPct>=0?'up':'down')}</td><td class="r mono">${(p.qty*share).toFixed(4)}</td><td class="r mono">${fmt2(p.avg)}</td><td class="r mono">${fmt2(p.price)}</td><td class="r mono ${p.dayPct>=0?'up':'down'}">${pct(p.dayPct)}</td><td class="r mono">${fmt2(p.mv*share)}</td><td class="r mono ${p.pl>=0?'up':'down'}">${fmt2(p.pl*share)}<div class="meta ${p.pl>=0?'up':'down'}">${pct(p.plPct)}</div></td></tr>`).join('')}
+  <tr><td><strong>Total</strong></td><td></td><td></td><td></td><td></td><td class="r mono ${c.dayPct>=0?'up':'down'}"><strong>${pct(c.dayPct)}</strong></td><td class="r mono"><strong>${fmt2(c.mv*share)}</strong></td><td class="r mono ${c.pl>=0?'up':'down'}"><strong>${fmt2(c.pl*share)}</strong></td></tr>
+  </tbody></table></div></div>
+  ${forInvestor?`<div class="alert"><div class="txt"><strong>Add to the public markets sleeve</strong><span>Minimum $5,000, liquid with 30 days notice, reported live on this page.</span></div><button class="btn gold" data-act="invest" data-id="public">Invest</button></div>`:''}`;
+}
+
+VIEWS.invest=()=>{
+  const pledged=pledgedBy(INVESTOR.name), unfunded=INVESTOR.commit-PAID, capLeft=INVESTOR.capacity-pledged;
+  const mine=allPledges().filter(p=>p.by===INVESTOR.name);
+  return `<div class="page-head"><div><h1>Invest</h1><p>Open offerings across Carlisle Capital. Minimums, terms and what you can add today.</p></div></div>
+  <div class="card"><div class="card-head"><h2>What you can invest</h2><span class="pill gold">Accredited · verified Aug 2025</span></div>
+    <div class="capacity">
+      <div class="capbar"><i style="--i:0;width:${(PAID/(INVESTOR.capacity+INVESTOR.commit)*100).toFixed(1)}%;background:var(--navy)" title="Paid in"></i><i style="--i:1;width:${(unfunded/(INVESTOR.capacity+INVESTOR.commit)*100).toFixed(1)}%;background:var(--gold)" title="Unfunded commitment"></i><i style="--i:2;width:${(pledged/(INVESTOR.capacity+INVESTOR.commit)*100).toFixed(1)}%;background:var(--gold2)" title="New subscriptions"></i></div>
+      <div class="legend"><span><i style="background:var(--navy)"></i>Paid in ${fmt(PAID)}</span><span><i style="background:var(--gold)"></i>Unfunded commitment ${fmt(unfunded)}</span><span><i style="background:var(--gold2)"></i>New subscriptions ${fmt(pledged)}</span><span><i style="background:var(--line)"></i>Available capacity ${fmt(capLeft)}</span></div>
+    </div>
+    <div class="facts" style="margin-top:14px">
+      <div class="fact"><span class="label">Pre cleared capacity</span><span class="val mono">${fmt(INVESTOR.capacity)}</span></div>
+      <div class="fact"><span class="label">Available today</span><span class="val mono gold">${fmt(capLeft)}</span></div>
+      <div class="fact"><span class="label">Funding</span><span class="val">Wire · instructions confirmed by phone</span></div>
+      <div class="fact"><span class="label">Need more capacity?</span><span class="val"><button class="link" data-act="newreq" data-type="Increase my commitment">Ask the Carlisle team</button></span></div>
+    </div></div>
+  <div class="grid3">${OFFERS.map(o=>{const r=raisedFor(o), left=Math.max(0,o.target-r), max=Math.min(left,capLeft), pctR=Math.min(100,r/o.target*100);
+    return `<div class="offer"><div class="offer-top"><span class="offer-type">${esc(o.type)}</span><h3>${esc(o.name)}</h3></div>
+    <div class="offer-body"><p>${esc(o.desc)}</p>
+      <div class="offer-kv"><div><span class="label">Minimum</span><b>${fmt(o.min)}</b></div><div><span class="label">Closes</span><b style="font-family:var(--body);font-weight:600">${esc(o.close)}</b></div><div><span class="label">Return</span><b style="font-family:var(--body);font-weight:500;font-size:13px">${esc(o.ret)}</b></div><div><span class="label">Risk</span><b style="font-family:var(--body);font-weight:600">${esc(o.risk)}</b></div></div>
+      <div><div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:5px"><span>${fmt(r)} of ${fmt(o.target)}</span><span>${pctR.toFixed(0)}%</span></div><div class="prog"><i style="--w:${pctR}%;animation-name:none;width:0" data-w="${pctR}"></i></div></div>
+    </div>
+    <div class="offer-foot"><span class="cap">Your max today <b>${fmt(max)}</b></span>${left>0&&max>=o.min?`<button class="btn gold small" data-act="invest" data-id="${o.id}">Invest</button>`:pill(left<=0?'Fully subscribed':'Below minimum','neutral')}</div></div>`;}).join('')}</div>
+  <div class="card"><h2 style="margin-bottom:12px">Your subscriptions</h2>${mine.length?mine.map(p=>{const o=offerById(p.offer);return `<div class="req"><div class="req-top"><strong>${esc(o?o.name:p.offer)}</strong><span class="mono">${fmt(p.amount)}</span></div><span class="meta">${esc(p.date)} · ${PSTATUS[p.status]}</span>${stepper(p.status,PSTATUS)}</div>`;}).join(''):'<p class="meta">No new subscriptions yet. Pick an offering above.</p>'}</div>`;
+};
+
+VIEWS.calls=()=>{
+  const st=S.call4.hale;
+  return `<div class="page-head"><div><h1>Capital calls</h1><p>${fmt(PAID)} of ${fmt(INVESTOR.commit)} called to date</p></div></div>
+  <div class="card"><div class="card-head"><div><span class="label">Open call</span><h2 style="font-family:var(--display);font-size:27px;margin-top:2px">Call No. 4 · ${fmt(INVESTOR.commit*0.16)}</h2></div>${callPill(st)}</div>
+    <div class="facts">
+      <div class="fact"><span class="label">Due date</span><span class="val">Nov 14, 2026</span></div>
+      <div class="fact"><span class="label">Share of commitment</span><span class="val num">16%</span></div>
+      <div class="fact"><span class="label">Continental tooling</span><span class="val mono">${fmt(24000)}</span></div>
+      <div class="fact"><span class="label">Nexus private beta</span><span class="val mono">${fmt(16000)}</span></div>
+    </div>
+    <p class="meta" style="margin:14px 0">Carlisle confirms wire instructions by phone only. Instructions sent by email alone, or any change to them, should be treated as fraud until you verify by phone.</p>
+    <div class="chips">${st==='open'?`<button class="btn gold" data-act="wired">I've sent the wire</button>`:''}<button class="btn ghost" data-act="doc" data-id="call4">View notice</button><button class="btn ghost" data-act="newreq" data-type="Schedule a call">Ask about this call</button></div>
+  </div>
+  <div class="card"><h2 style="margin-bottom:8px">History</h2><div class="table-wrap"><table><thead><tr><th>Call</th><th>Date</th><th>Purpose</th><th class="r">Amount</th><th>Status</th></tr></thead><tbody>
+  ${CALLS.map(c=>`<tr><td>No. ${c.no}</td><td>${c.date}</td><td>${esc(c.purpose)}</td><td class="r mono">${fmt(INVESTOR.commit*c.pct)}</td><td>${c.open?callPill(st):pill('Paid','good')}</td></tr>`).join('')}
+  </tbody></table></div></div>`;
+};
+VIEWS.documents=()=>{
+  const cats=['All',...new Set(DOCS.map(d=>d.cat))];
+  const list=DOCS.filter(d=>S.docFilter==='All'||d.cat===S.docFilter);
+  return `<div class="page-head"><div><h1>Documents</h1><p>Statements, notices, tax forms and legal documents for your account</p></div></div>
+  <div class="chips">${cats.map(c=>`<button class="chip" aria-pressed="${S.docFilter===c}" data-act="docfilter" data-cat="${c}">${c}</button>`).join('')}</div>
+  <div class="card"><div class="list">${list.map(d=>`<div class="row clickable" data-act="doc" data-id="${d.id}" tabindex="0"><div class="doc-ico">PDF</div><div class="main"><strong>${esc(d.title)}</strong><span>${esc(d.cat)} · ${esc(d.date)}</span></div><div class="end"><span class="link">Open</span></div></div>`).join('')}</div></div>`;
+};
+VIEWS.updates=()=>`<div class="page-head"><div><h1>Updates</h1><p>News from Carlisle and the portfolio, published to every investor at once</p></div>${db?'<span class="pill live">Live</span>':''}</div>
+  <div class="feed">${allUpdates().map(u=>`<div class="card post lift"><span class="meta">${esc(u.date)} · ${esc(u.venture)}</span><h3>${esc(u.title)}</h3><p>${esc(u.body)}</p></div>`).join('')}</div>`;
+VIEWS.messages=()=>`<div class="page-head"><div><h1>Messages</h1><p>Secure thread with George Serafin, managing member</p></div></div>
+  <div class="card"><div class="thread" id="thread">${S.messages.map(m=>`<div class="msg ${m.from}">${m.typing?'<span class="typing"><i></i><i></i><i></i></span>':esc(m.text)}<small>${esc(m.time||'')}</small></div>`).join('')}</div>
+  <form class="composer" data-form="msg"><input type="text" id="msgInput" placeholder="Write a message" aria-label="Message" autocomplete="off"><button class="btn">Send</button></form></div>`;
+VIEWS.concierge=()=>{
+  const mine=S.requests.filter(r=>r.by===INVESTOR.name);
+  const svc=[['Increase my commitment','Raise your pre cleared capacity or Fund I commitment'],['Request a document','Statements, tax forms or letters for your advisors'],['Request a company update','Ask for a fresh update on any holding'],['Schedule a call','Time with the managing member'],['Tax question','K1 timing, state filings and cost basis'],['Update my account','Address, contact or banking details']];
+  return `<div class="page-head"><div><h1>Concierge</h1><p>Ask for anything. Every request is tracked until it is complete.</p></div></div>
+  <div class="svc">${svc.map(([t,s])=>`<button data-act="newreq" data-type="${t}"><strong>${t}</strong><span>${s}</span></button>`).join('')}</div>
+  <div class="card"><h2 style="margin-bottom:12px">Your requests</h2>${mine.length?mine.map(r=>`<div class="req"><div class="req-top"><strong>${esc(r.type)}</strong>${pill(STATUS[r.status],r.status===3?'good':r.status===0?'neutral':'gold')}</div><span class="meta">${esc(r.date)}</span><p style="margin:0">${esc(r.detail)}</p>${stepper(r.status)}</div>`).join(''):'<p class="meta">No requests yet. Pick a service above to start one.</p>'}</div>`;
+};
+VIEWS.ask=()=>{
+  const sugg=['When is my next capital call?','How is the public sleeve doing today?','What is my TVPI?','How is Continental doing?','What can I still invest?'];
+  return `<div class="page-head"><div><h1>Ask Carlisle</h1><p>Plain answers about your account${sample?', answered by the Carlisle agent':', drawn from your statements'}</p></div>${sample?'<span class="pill gold">Agent online</span>':''}</div>
+  <div class="card"><form class="composer" data-form="ask" style="margin-top:0"><input type="text" id="askInput" placeholder="Ask about your account, a holding or an offering" aria-label="Question" autocomplete="off"><button class="btn gold">Ask</button></form>
+  <div class="chips" style="margin-top:12px">${sugg.map(s=>`<button class="chip" data-act="asksugg" data-q="${s}">${s}</button>`).join('')}</div>
+  <div class="ask-out">${S.askLog.slice().reverse().map(a=>`<div class="qa-q">${esc(a.q)}</div><div class="qa-a">${a.pending?'<span class="typing"><i></i><i></i><i></i></span>':a.a}</div>`).join('')}</div></div>`;
+};
+function ruleAnswer(q){
+  const s=q.toLowerCase();
+  const v=VENTURES.find(v=>s.includes(v.name.toLowerCase())||s.includes(v.id)||(v.full&&s.includes(v.full.toLowerCase()))||(v.id==='oggames'&&s.includes('world at war'))||(v.id==='ogarchives'&&s.includes('archive')));
+  if(v) return `${esc(v.name)} is at the ${esc(v.stage.toLowerCase())} stage. Your cost is ${fmt(v.cost)} and the current value is ${fmt(v.val)} (${(v.val/v.cost).toFixed(2)}x). Next: ${esc(v.next)} <button class="link" data-act="sheet" data-id="${v.id}">Open tear sheet</button>`;
+  if(/sleeve|public|stock|robinhood|market|today/.test(s)&&S.bk){const c=bkCalc(S.bk);return `The public markets sleeve is worth ${fmt2(c.total)} (${pct(c.dayPct)} today), your share ${fmt2(c.total*SHARE)}. Largest position: ${c.pos[0].symbol} at ${fmt2(c.pos[0].mv)}. Updated ${ago(S.bk.asOf)}. <button class="link" data-act="tab" data-tab="markets">Open public markets</button>`;}
+  if(/call|due|wire/.test(s)) return S.call4.hale==='paid'?'Call No. 4 is paid. No other calls are open.':`Call No. 4 is ${fmt(40000)}, due Nov 14, 2026. ${S.call4.hale==='pending'?'Your wire is marked as sent and is awaiting confirmation.':'It funds Continental tooling and the Nexus beta.'} <button class="link" data-act="tab" data-tab="calls">Go to capital calls</button>`;
+  if(/tvpi|multiple|return|perform/.test(s)) return `Your TVPI is ${TVPI.toFixed(2)}x: ${fmt(VALUE)} in value on ${fmt(PAID)} paid in, as of ${FUND.asOf}. No distributions have been made yet.`;
+  if(/still invest|capacity|can i invest|how much can|offer|minimum/.test(s)) return `You have ${fmt(INVESTOR.capacity-pledgedBy(INVESTOR.name))} of pre cleared capacity. Six offerings are open, with minimums from ${fmt(2500)} (ASTRAEUS facility) to ${fmt(25000)} (Fund I). <button class="link" data-act="tab" data-tab="invest">See offerings</button>`;
+  if(/invest|paid|contribut|put in/.test(s)) return `You have paid in ${fmt(PAID)} across three capital calls, which is ${Math.round(PAID/INVESTOR.commit*100)}% of your ${fmt(INVESTOR.commit)} commitment.`;
+  if(/unfunded|remaining|left|commit/.test(s)) return `Your unfunded commitment is ${fmt(INVESTOR.commit-PAID)}. Call No. 4 would draw ${fmt(40000)} of it.`;
+  if(/worth|value|nav|balance/.test(s)) return `Your capital account is worth ${fmt(VALUE)} as of ${FUND.asOf}, up ${fmt(VALUE-PAID)} on cost.`;
+  if(/k1|k-1|tax/.test(s)) return `Your 2025 K1 tax package is in Documents. The 2026 package is targeted for mid March 2027. <button class="link" data-act="doc" data-id="k1">Open 2025 K1</button>`;
+  if(/doc|statement|letter/.test(s)) return `You have ${DOCS.length} documents, including the Q3 2026 letter and capital account statement. <button class="link" data-act="tab" data-tab="documents">Open documents</button>`;
+  return null;
+}
+async function answer(q){
+  const rule=ruleAnswer(q);
+  if(!sample) return rule||`I don't have that in your statements. <button class="link" data-act="askteam" data-q="${esc(q)}">Send this question to George</button>`;
+  const ctx={investor:{name:INVESTOR.name,commitment:INVESTOR.commit,paidIn:PAID,value:VALUE,tvpi:+TVPI.toFixed(2),unfunded:INVESTOR.commit-PAID,capacity:INVESTOR.capacity-pledgedBy(INVESTOR.name),call4:{amount:40000,due:'2026-11-14',status:S.call4.hale}},
+    holdings:VENTURES.map(v=>({name:v.name,stage:v.stage,cost:v.cost,value:v.val,next:v.next})),
+    offerings:OFFERS.map(o=>({name:o.name,type:o.type,min:o.min,target:o.target,raised:raisedFor(o),close:o.close,terms:o.term,returns:o.ret,risk:o.risk})),
+    publicSleeve:S.bk?(()=>{const c=bkCalc(S.bk);return {total:+c.total.toFixed(2),investorShare:+(c.total*SHARE).toFixed(2),dayPct:+c.dayPct.toFixed(2),asOf:S.bk.asOf,positions:c.pos.map(p=>({symbol:p.symbol,value:+p.mv.toFixed(2),dayPct:+p.dayPct.toFixed(2),plPct:+p.plPct.toFixed(2)}))};})():null};
+  try{
+    const r=await sample(`You are the Carlisle Capital investor concierge. Answer the limited partner's question in two or three plain sentences using only this account data (JSON). Dollar figures are the investor's own share unless noted. Do not give investment advice; describe facts and offer to connect them with George Serafin, the managing member, for decisions. No markdown.\n\nDATA: ${JSON.stringify(ctx)}\n\nQUESTION: ${q}`,{modelTier:'quick'});
+    return esc(r.text.trim());
+  }catch(e){ return rule||`I couldn't reach the agent just now. <button class="link" data-act="askteam" data-q="${esc(q)}">Send this question to George</button>`; }
+}
+
+/* ---------- Team views ---------- */
+const fundPaid=PAID/SHARE, fundVal=VALUE/SHARE, fundCommit=LPS.reduce((a,l)=>a+l.commit,0);
+const call4Total=fundCommit*0.16, call4In=()=>LPS.filter(l=>S.call4[l.id]==='paid').reduce((a,l)=>a+l.commit*0.16,0);
+VIEWS['t-overview']=()=>{
+  const open=S.requests.filter(r=>r.status<3), pl=allPledges(), newP=pl.filter(p=>p.status<3);
+  const pending=LPS.filter(l=>S.call4[l.id]==='pending');
+  const doneChecks=Object.values(S.checks).filter(Boolean).length;
+  const subTotal=pl.reduce((a,p)=>a+p.amount,0);
+  return `<div class="page-head"><div><h1>${greet()}, George</h1><p>${FUND.name} · ${LPS.length} limited partners · public sleeve live</p></div><div class="chips"><button class="btn gold" data-act="tab" data-tab="t-publish">Publish update</button></div></div>
+  ${ticker()}
+  <div class="stats">
+    <div class="stat"><span class="label">Commitments</span><span class="v" data-count="${fundCommit}">$0</span><span class="s">${LPS.length} investors</span></div>
+    <div class="stat"><span class="label">Called</span><span class="v" data-count="${fundPaid}">$0</span><span class="s">${Math.round(fundPaid/fundCommit*100)}% of commitments</span></div>
+    <div class="stat key"><span class="label">Fund value</span><span class="v" data-count="${fundVal}">$0</span><span class="s">${TVPI.toFixed(2)}x TVPI</span></div>
+    <div class="stat"><span class="label">New subscriptions</span><span class="v" data-count="${subTotal}">$0</span><span class="s">${pl.length} across ${new Set(pl.map(p=>p.offer)).size} offerings</span></div>
+    <div class="stat"><span class="label">Public sleeve</span><span class="v" data-count="${S.bk?bkCalc(S.bk).total:0}" data-kind="money2">$0.00</span><span class="s">${S.bk?pct(bkCalc(S.bk).dayPct)+' today':'syncing'}</span></div>
+  </div>
+  <div class="grid2">
+    <div class="card lift"><div class="card-head"><h2>Needs attention</h2></div><div class="list">
+      ${newP.map(p=>{const o=offerById(p.offer);return `<div class="row clickable" data-act="tab" data-tab="t-subs"><div class="main"><strong>${esc(p.by)}: ${fmt(p.amount)} into ${esc(o?o.name:p.offer)}</strong><span>${PSTATUS[p.status]} · ${esc(p.date)}</span></div><div class="end">${pill(p.status===0?'New':'Open',p.status===0?'bad':'gold')}</div></div>`;}).join('')}
+      ${open.map(r=>`<div class="row clickable" data-act="tab" data-tab="t-requests"><div class="main"><strong>${esc(r.by)}: ${esc(r.type)}</strong><span>${STATUS[r.status]} · ${esc(r.date)}</span></div><div class="end">${pill(r.status===0?'New':'Open',r.status===0?'bad':'gold')}</div></div>`).join('')}
+      ${pending.map(l=>`<div class="row clickable" data-act="tab" data-tab="t-calls"><div class="main"><strong>${esc(l.name)}: wire to confirm</strong><span>Call No. 4 · ${fmt(l.commit*0.16)}</span></div><div class="end">${pill('Confirm','warn')}</div></div>`).join('')}
+      <div class="row clickable" data-act="tab" data-tab="t-entity"><div class="main"><strong>Entity housekeeping</strong><span>${doneChecks} of 6 items done</span></div><div class="end">${pill(doneChecks===6?'Done':'Open',doneChecks===6?'good':'warn')}</div></div>
+    </div></div>
+    ${marketsBlock(false)}
+  </div>
+  <div class="grid2">
+    <div class="card lift"><div class="card-head"><h2>Fund allocation by cost</h2><span class="meta num">${fmt(fundPaid)}</span></div>${allocBar(VENTURES,'cost')}</div>
+    <div class="card lift"><div class="card-head"><h2>Offering progress</h2><button class="link" data-act="tab" data-tab="t-subs">Subscriptions</button></div>
+      <div class="list">${OFFERS.map(o=>{const r=raisedFor(o),p=Math.min(100,r/o.target*100);return `<div class="row"><div class="main"><strong>${esc(o.name)}</strong><div class="prog" style="margin-top:6px"><i style="--w:${p}%;animation-name:none;width:0" data-w="${p}"></i></div></div><div class="end mono" style="font-size:13px">${fmt(r)}<div class="meta">of ${fmt(o.target)}</div></div></div>`;}).join('')}</div></div>
+  </div>`;
+};
+VIEWS['t-brokerage']=()=>{
+  const body=marketsPage(false);
+  return body+`<div class="card"><div class="card-head"><h2>How the live feed works</h2><span class="pill gold">Carlisle agent</span></div>
+  <ul class="ticks">
+    <li>The Carlisle agent reads the Robinhood account (positions, cost basis, quotes) and writes one snapshot that every investor view reads.</li>
+    <li>Snapshots publish to this page's live store${db?' (connected now)':''} and to <span class="mono">data/brokerage.json</span> on the site, so the GitHub Pages copy updates too.</li>
+    <li>Investors see their pro rata share. You see the whole account, with the account ending ${esc((S.bk&&S.bk.account&&S.bk.account.last4)||'')}.</li>
+    <li>Ask Claude to "sync the brokerage" any time, or set a scheduled task to refresh it every trading day.</li>
+  </ul></div>`;
+};
+VIEWS['t-subs']=()=>{
+  const pl=allPledges();
+  return `<div class="page-head"><div><h1>Subscriptions</h1><p>New money coming in across the six open offerings</p></div></div>
+  <div class="stats">${OFFERS.slice(0,4).map(o=>{const r=raisedFor(o);return `<div class="stat"><span class="label">${esc(o.name)}</span><span class="v" data-count="${r}">$0</span><span class="s">of ${fmt(o.target)} · min ${fmt(o.min)}</span></div>`;}).join('')}</div>
+  <div class="card">${pl.length?pl.map(p=>{const o=offerById(p.offer);return `<div class="req"><div class="req-top"><div><strong>${esc(p.by)} · ${fmt(p.amount)}</strong><div class="meta">${esc(o?o.name:p.offer)} · ${esc(p.date)}</div></div>${pill(PSTATUS[p.status],p.status===3?'good':p.status===0?'bad':'gold')}</div>${stepper(p.status,PSTATUS)}
+    <div class="chips" style="margin-top:10px">${p.status<3?`<button class="btn small" data-act="advancep" data-id="${p.id}">Move to ${PSTATUS[p.status+1]}</button>`:''}<button class="btn small ghost" data-act="tab" data-tab="t-publish">Send an update</button></div></div>`;}).join(''):'<p class="meta">No subscriptions yet.</p>'}</div>`;
+};
+VIEWS['t-requests']=()=>`<div class="page-head"><div><h1>Requests</h1><p>Move each request forward. Investors see every step.</p></div></div>
+  <div class="card">${S.requests.length?S.requests.map(r=>`<div class="req"><div class="req-top"><div><strong>${esc(r.type)}</strong><div class="meta">${esc(r.by)} · ${esc(r.date)}</div></div>${pill(STATUS[r.status],r.status===3?'good':r.status===0?'bad':'gold')}</div><p style="margin:4px 0 0">${esc(r.detail)}</p>${stepper(r.status)}
+  <div class="chips" style="margin-top:10px">${r.status<3?`<button class="btn small" data-act="advance" data-id="${r.id}">Move to ${STATUS[r.status+1]}</button>`:''}<button class="btn small ghost" data-act="tab" data-tab="t-publish">Reply with an update</button></div></div>`).join(''):'<p class="meta">No requests.</p>'}</div>`;
+VIEWS['t-calls']=()=>`<div class="page-head"><div><h1>Capital calls</h1><p>Call No. 4 · 16% of commitments · due Nov 14, 2026</p></div></div>
+  <div class="stats"><div class="stat key"><span class="label">Collected</span><span class="v" data-count="${call4In()}">$0</span><span class="s">of ${fmt(call4Total)}</span></div>
+  <div class="stat"><span class="label">Continental tooling</span><span class="v" data-count="${call4Total*0.6}">$0</span><span class="s">60% of call</span></div>
+  <div class="stat"><span class="label">Nexus private beta</span><span class="v" data-count="${call4Total*0.4}">$0</span><span class="s">40% of call</span></div></div>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>Investor</th><th class="r">Commitment</th><th class="r">Call No. 4</th><th>Status</th><th></th></tr></thead><tbody>
+  ${LPS.map(l=>`<tr><td><strong>${esc(l.name)}</strong><div class="meta">${esc(l.type)}</div></td><td class="r mono">${fmt(l.commit)}</td><td class="r mono">${fmt(l.commit*0.16)}</td><td>${callPill(S.call4[l.id])}</td><td class="r">${S.call4[l.id]!=='paid'?`<button class="btn small" data-act="confirm" data-id="${l.id}">Confirm receipt</button>`:''}</td></tr>`).join('')}
+  </tbody></table></div></div>`;
+VIEWS['t-investors']=()=>`<div class="page-head"><div><h1>Investors</h1><p>Fund I limited partners, values as of ${FUND.asOf}</p></div></div>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>Investor</th><th>Type</th><th class="r">Commitment</th><th class="r">Paid in</th><th class="r">Value</th><th class="r">New subs</th><th>Call No. 4</th></tr></thead><tbody>
+  ${LPS.map(l=>`<tr><td><strong>${esc(l.name)}</strong></td><td>${esc(l.type)}</td><td class="r mono">${fmt(l.commit)}</td><td class="r mono">${fmt(l.commit*0.6)}</td><td class="r mono">${fmt(l.commit*0.6*TVPI)}</td><td class="r mono">${fmt(allPledges().filter(p=>p.by===l.name).reduce((a,p)=>a+p.amount,0))}</td><td>${callPill(S.call4[l.id])}</td></tr>`).join('')}
+  <tr><td><strong>Total</strong></td><td></td><td class="r mono"><strong>${fmt(fundCommit)}</strong></td><td class="r mono"><strong>${fmt(fundPaid)}</strong></td><td class="r mono"><strong>${fmt(fundVal)}</strong></td><td class="r mono"><strong>${fmt(allPledges().reduce((a,p)=>a+p.amount,0))}</strong></td><td></td></tr>
+  </tbody></table></div></div>`;
+VIEWS['t-publish']=()=>`<div class="page-head"><div><h1>Publish update</h1><p>Posts to every Fund I investor${db&&canWrite?' live, on every open screen':''} and sends a notification</p></div></div>
+  <div class="card"><form class="form" data-form="publish">
+  <div class="field"><label for="pubVenture">About</label><select id="pubVenture"><option>Fund I</option><option>Public markets sleeve</option>${VENTURES.map(v=>`<option>${esc(v.name)}</option>`).join('')}</select></div>
+  <div class="field"><label for="pubTitle">Headline</label><input type="text" id="pubTitle" value="Continental tooling order placed"></div>
+  <div class="field"><label for="pubBody">Update</label><textarea id="pubBody">Tooling for the first Continental prototype run is ordered. Delivery is expected in late November, with the first test articles in December.</textarea></div>
+  <div><button class="btn gold">Publish to investors</button></div></form></div>`;
+VIEWS['t-entity']=()=>{
+  const ein=S.einShown?'39-4004429':'••••••4429';
+  const items=[['oa','Sign and date the Operating Agreement. The copy on file has a blank signature line and date.'],['exa','Fill in your capital contribution on Exhibit A of the Operating Agreement.'],['ss4','Sign and date the Form SS4 copy and file it with company records, as LegalZoom instructed.'],['bank','Open a business bank account in the LLC name using the EIN.'],['addr','Confirm the principal address. State and IRS records show the Tampa address. If the business moved, update it with the state and file IRS Form 8822B.'],['founder','Draft the Continental founder agreement covering equity, vesting and IP before major design work.']];
+  return `<div class="page-head"><div><h1>Entity &amp; compliance</h1><p>Carlisle Capital LLC records, filing calendar and open housekeeping</p></div></div>
+  <div class="card"><div class="card-head"><h2>Company record</h2>${pill('Active','good')}</div><div class="facts">
+    <div class="fact"><span class="label">Legal name</span><span class="val">Carlisle Capital LLC</span></div>
+    <div class="fact"><span class="label">State and type</span><span class="val">Florida limited liability company</span></div>
+    <div class="fact"><span class="label">Sunbiz document no.</span><span class="val mono">L25000391643</span></div>
+    <div class="fact"><span class="label">Filed</span><span class="val">Aug 25, 2025</span></div>
+    <div class="fact"><span class="label">EIN</span><span class="val mono">${ein} <button class="link" data-act="ein">${S.einShown?'Hide':'Show'}</button></span></div>
+    <div class="fact"><span class="label">IRS name control</span><span class="val mono">CARL</span></div>
+    <div class="fact"><span class="label">Tax classification</span><span class="val">Disregarded entity, single member</span></div>
+    <div class="fact"><span class="label">Managing member</span><span class="val">George J. Serafin, 100%</span></div>
+    <div class="fact"><span class="label">Registered agent</span><span class="val">United States Corporation Agents, Inc., Jacksonville</span></div>
+    <div class="fact"><span class="label">Principal address on file</span><span class="val">14904 Arbor Springs Cir Apt 302, Tampa, FL 33624</span></div>
+    <div class="fact"><span class="label">Fiscal year end</span><span class="val">December</span></div>
+  </div></div>
+  <div class="grid2">
+    <div class="card"><div class="card-head"><h2>Filing calendar</h2></div>
+      <div class="cal"><div class="d"><small>Window</small>Jan 1</div><div><strong>Florida annual report opens</strong><div class="meta">First report is due in 2027, the year after formation. Filing fee $138.75 on Sunbiz. File directly rather than through a third party.</div></div></div>
+      <div class="cal"><div class="d"><small>Deadline</small>Apr 15</div><div><strong>Federal income tax</strong><div class="meta">As a single member disregarded entity, LLC income goes on your personal return (Schedule C). No separate federal return.</div></div></div>
+      <div class="cal"><div class="d"><small>Deadline</small>May 1</div><div><strong>Annual report due</strong><div class="meta">A $400 late fee applies after May 1. Missing it leads to administrative dissolution later in the year.</div></div></div>
+      <div class="cal"><div class="d"><small>Yearly</small>Agent</div><div><strong>Registered agent renewal</strong><div class="meta">Check the renewal date with United States Corporation Agents.</div></div></div>
+    </div>
+    <div class="card"><div class="card-head"><h2>Housekeeping</h2><span class="meta">${Object.values(S.checks).filter(Boolean).length} of 6 done</span></div>
+      ${items.map(([k,t])=>`<label class="check ${S.checks[k]?'done':''}"><input type="checkbox" id="chk-${k}" data-act="check" data-id="${k}" ${S.checks[k]?'checked':''}><span>${t}</span></label>`).join('')}
+    </div>
+  </div>
+  <div class="card"><div class="card-head"><h2>Formation documents</h2><span class="meta">Originals in the project files</span></div><div class="list">
+    ${[['articles','Articles of Organization','Certified copy · filed Aug 25, 2025'],['cp575','IRS EIN Notice CP 575 G','Aug 27, 2025 · issued once, keep permanently'],['ss4','Form SS4, EIN application','Aug 27, 2025 · contains your SSN, store offline'],['oa','Operating Agreement','Single member · signature and date pending']].map(([id,t,s])=>`<div class="row clickable" data-act="edoc" data-id="${id}" tabindex="0"><div class="doc-ico">PDF</div><div class="main"><strong>${t}</strong><span>${s}</span></div><div class="end"><span class="link">Open</span></div></div>`).join('')}
+  </div></div>`;
+};
+
+/* ---------- Drawer ---------- */
+function openDrawer(eyebrow,title,body){
+  $('#drEyebrow').textContent=eyebrow; $('#drTitle').textContent=title; const b=$('#drBody'); b.innerHTML=body; stagger(b); countUp(b);
+  $('#scrim').classList.add('on'); const d=$('#drawer'); d.classList.add('on'); d.setAttribute('aria-hidden','false');
+  setTimeout(()=>d.querySelector('.x').focus(),50);
+}
+function closeDrawer(){$('#scrim').classList.remove('on');const d=$('#drawer');d.classList.remove('on');d.setAttribute('aria-hidden','true');}
+function sheet(id){
+  const v=VENTURES.find(x=>x.id===id); if(!v)return;
+  openDrawer(v.sector,v.name,`
+  <div>${pill(v.stage,v.tone)}</div>
+  <div class="sheet-stats"><div><span class="label">Your cost</span><b data-count="${v.cost}">$0</b></div><div><span class="label">Value</span><b data-count="${v.val}">$0</b></div><div><span class="label">Multiple</span><b data-count="${v.val/v.cost}" data-kind="x">0.00x</b></div></div>
+  <p>${esc(v.blurb)}</p>
+  <div class="facts">${v.kpis.map(([k,val])=>`<div class="fact"><span class="label">${esc(k)}</span><span class="val" style="font-size:20px;font-weight:600;font-family:var(--mono)">${esc(val)}</span></div>`).join('')}</div>
+  <div><div class="label" style="margin-bottom:8px">Progress</div><ul class="ticks">${v.done.map(d=>`<li>${esc(d)}</li>`).join('')}</ul></div>
+  <div><div class="label" style="margin-bottom:6px">Next milestone</div><p>${esc(v.next)}</p></div>
+  <p class="meta">Fund I holds ${fmt(v.cost/SHARE)} at cost in ${esc(v.name)}. Values as of ${FUND.asOf}.</p>
+  ${S.role==='investor'?`<div class="chips">${OFFERS.some(o=>o.id===v.id)?`<button class="btn gold" data-act="invest" data-id="${v.id}">Invest directly</button>`:''}<button class="btn ghost" data-act="newreq" data-type="Request a company update" data-venture="${esc(v.name)}">Request an update</button></div>`:''}`);
+}
+function doc(id){
+  const d=DOCS.find(x=>x.id===id); if(!d)return;
+  let body='';
+  if(d.kind==='cas') body=`<div class="paper"><h4>Capital Account Statement</h4><div class="meta">${INVESTOR.name} · ${FUND.name}</div><div class="lines">${d.lines.map(([k,v])=>`<div class="ln"><span>${k}</span><span>${v<0?'('+fmt(-v)+')':(k.startsWith('Change')&&v>0?'+':'')+fmt(v)}</span></div>`).join('')}<div class="ln total"><span>Ending balance</span><span>${fmt(d.end)}</span></div></div></div>`;
+  if(d.kind==='call') body=`<div class="paper"><h4>Capital Call Notice No. 4</h4><p>Dear ${INVESTOR.first},</p><p>Under your Subscription Agreement, Carlisle Capital Fund I calls 16% of your commitment, due November 14, 2026.</p><div class="lines"><div class="ln"><span>Continental Firearms prototype tooling</span><span>${fmt(24000)}</span></div><div class="ln"><span>Nexus private beta</span><span>${fmt(16000)}</span></div><div class="ln total"><span>Amount due</span><span>${fmt(40000)}</span></div></div><p class="meta">Wire instructions are confirmed by phone with George Serafin before you send funds.</p></div>`;
+  if(d.kind==='letter') body=`<div class="paper"><h4>Third Quarter 2026</h4><p>Your capital account rose from ${fmt(158900)} to ${fmt(171400)} in the quarter, a 7.9% gain, for a ${TVPI.toFixed(2)}x TVPI since inception.</p><p>Continental Firearms finished scoping its first products and secured tooling quotes. ASTRAEUS published its storefront. Old Glory Archives passed 5.4 million views and is monetized. Nexus set its build order and is heading to a private beta.</p><p>Capital Call No. 4 funds the two most time sensitive milestones: Continental tooling and the Nexus beta.</p><p>Thank you for your partnership.<br>George Serafin, Managing Member</p></div>`;
+  if(d.kind==='tax') body=`<div class="paper"><h4>2025 Schedule K1</h4><div class="meta">Partner: ${INVESTOR.name} · Tax year 2025</div><div class="lines"><div class="ln"><span>Capital contributed during year</span><span>${fmt(50000)}</span></div><div class="ln"><span>Ordinary business income (loss)</span><span>(${fmt(1850)})</span></div><div class="ln"><span>Ending capital account</span><span>${fmt(50800)}</span></div></div><p class="meta">Illustrative sample. Give your tax advisor the full package.</p></div>`;
+  if(d.kind==='sub') body=`<div class="paper"><h4>Subscription Agreement</h4><p>${INVESTOR.name} subscribes for a limited partner interest in Carlisle Capital Fund I with a capital commitment of ${fmt(INVESTOR.commit)}, payable in installments on capital call notices.</p><div class="lines"><div class="ln"><span>Commitment</span><span>${fmt(INVESTOR.commit)}</span></div><div class="ln"><span>Investor status</span><span>Accredited</span></div><div class="ln"><span>Executed</span><span>Aug 29, 2025</span></div></div></div>`;
+  if(d.kind==='ppm') body=`<div class="paper"><h4>Private Placement Memorandum</h4><p>Carlisle Capital Fund I, L.P. Offering of limited partner interests to accredited investors under Regulation D, Rule 506(b).</p><div class="lines"><div class="ln"><span>Target size</span><span>${fmt(1000000)}</span></div><div class="ln"><span>Minimum commitment</span><span>${fmt(25000)}</span></div><div class="ln"><span>Management fee</span><span>1.5%</span></div><div class="ln"><span>Carried interest</span><span>20% over 8% preferred</span></div><div class="ln"><span>Term</span><span>7 years, two 1 year extensions</span></div></div><p class="meta">Summary only. Read the full memorandum and risk factors before investing.</p></div>`;
+  if(d.kind==='overview') body=`<div class="paper"><h4>Fund I Overview</h4><p>Carlisle Capital Fund I invests in early ventures built and operated inside Carlisle Capital LLC, a Florida holding company, plus a liquid public markets sleeve. Focus areas: heritage and specialty products, consumer software, media and publishing.</p><div class="lines"><div class="ln"><span>Target size</span><span>${fmt(1000000)}</span></div><div class="ln"><span>Vintage</span><span>2025</span></div><div class="ln"><span>Manager</span><span>Carlisle Capital LLC</span></div></div></div>`;
+  openDrawer(d.cat+' · '+d.date,d.title,body+`<p class="meta">Demo document with illustrative figures.</p>`);
+}
+function edoc(id){
+  const map={
+   articles:['Florida Department of State','Articles of Organization',`<div class="paper"><div class="lines">
+     <div class="ln"><span>Document number</span><span class="mono">L25000391643</span></div>
+     <div class="ln"><span>Filed</span><span>Aug 25, 2025, 8:00 AM</span></div>
+     <div class="ln"><span>Principal and mailing address</span><span>Tampa, FL 33624</span></div>
+     <div class="ln"><span>Registered agent</span><span>United States Corporation Agents, Inc.</span></div>
+     <div class="ln"><span>Authorized person</span><span>George J. Serafin, AMBR</span></div></div>
+     <p class="meta">Certified copy issued Aug 27, 2025 under the Great Seal. Annual report required each year between Jan 1 and May 1, starting the year after formation.</p></div>`],
+   cp575:['Internal Revenue Service','EIN Notice CP 575 G',`<div class="paper"><div class="lines">
+     <div class="ln"><span>EIN</span><span class="mono">${S.einShown?'39-4004429':'••••••4429'}</span></div>
+     <div class="ln"><span>Notice date</span><span>Aug 27, 2025</span></div>
+     <div class="ln"><span>Name control</span><span class="mono">CARL</span></div>
+     <div class="ln"><span>Name on file</span><span>Carlisle Capital LLC</span></div></div>
+     <p class="meta">The IRS issues this notice once and cannot reprint it. Use the name and EIN exactly as shown on every federal form. Give a copy to banks or vendors who ask for proof of EIN.</p></div>`],
+   ss4:['Internal Revenue Service','Form SS4, EIN application',`<div class="flag">This form lists your Social Security number as the responsible party. It is not shown here. Keep it offline and do not send it to anyone asking for proof of EIN. Send the CP 575 G instead.</div>
+     <div class="paper"><div class="lines">
+     <div class="ln"><span>Entity type</span><span>Disregarded entity, single member LLC</span></div>
+     <div class="ln"><span>Reason for applying</span><span>Started new business: holding company</span></div>
+     <div class="ln"><span>Business start date</span><span>Aug 25, 2025</span></div>
+     <div class="ln"><span>County</span><span>Hillsborough, Florida</span></div>
+     <div class="ln"><span>Employees expected</span><span>0</span></div></div>
+     <p class="meta">LegalZoom asked that you sign and date this copy for your records.</p></div>`],
+   oa:['Governing document','Operating Agreement',`<div class="flag">Signature and date lines are blank, and the capital contribution on Exhibit A is empty. Sign, date and fill it in so the agreement is in force and backs up your liability protection.</div>
+     <div class="paper"><div class="lines">
+     <div class="ln"><span>Members</span><span>George James Serafin, 100%</span></div>
+     <div class="ln"><span>Management</span><span>Member managed</span></div>
+     <div class="ln"><span>S corporation election</span><span>Allowed by member consent (Sec. 5.4)</span></div>
+     <div class="ln"><span>Banking</span><span>All funds in LLC accounts (Sec. 5.6)</span></div>
+     <div class="ln"><span>Amendments</span><span>In writing, signed by all members</span></div></div></div>`]
+  };
+  const m=map[id]; if(m)openDrawer(m[0],m[1],m[2]);
+}
+function newReq(type,venture){
+  const ph={ 'Increase my commitment':'Example: Raise my pre cleared capacity to $600,000.', 'Request a document':'Which document, and who should receive it?', 'Request a company update':'What would you like to know?', 'Schedule a call':'A few times that work for you.', 'Tax question':'Your question for the Carlisle team.', 'Update my account':'What changed? Do not include account numbers here.'};
+  openDrawer('Concierge',type,`<form class="form" data-form="req" data-type="${esc(type)}">
+   <div class="field"><label for="reqText">Details</label><textarea id="reqText" placeholder="${esc(ph[type]||'Details')}">${venture?`Could you share a fresh update on ${esc(venture)}?`:''}</textarea></div>
+   <div><button class="btn gold">Send request</button></div>
+   <p class="meta">You'll see each step here and get a notification as it moves.</p></form>`);
+}
+/* Invest flow */
+const INV={offer:null,amount:0,step:0};
+function investOpen(id){
+  const o=offerById(id); if(!o)return;
+  const left=Math.max(0,o.target-raisedFor(o)), max=Math.max(0,Math.min(left,INVESTOR.capacity-pledgedBy(INVESTOR.name)));
+  INV.offer=o; INV.amount=Math.min(max,Math.max(o.min,Math.round((o.min*2)/o.step)*o.step)); INV.max=max; INV.step=0;
+  renderInvest();
+}
+function renderInvest(){
+  const o=INV.offer, a=INV.amount, max=INV.max;
+  const quick=[o.min,o.min*2,Math.round(o.min*4/o.step)*o.step,max].filter((v,i,arr)=>v>=o.min&&v<=max&&arr.indexOf(v)===i);
+  let body='';
+  if(INV.step===0) body=`
+    <div><span class="offer-type">${esc(o.type)}</span><p style="margin-top:6px">${esc(o.desc)}</p></div>
+    <div class="facts"><div class="fact"><span class="label">Minimum</span><span class="val mono">${fmt(o.min)}</span></div><div class="fact"><span class="label">Increment</span><span class="val mono">${fmt(o.step)}</span></div><div class="fact"><span class="label">Terms</span><span class="val">${esc(o.term)}</span></div><div class="fact"><span class="label">Fees</span><span class="val">${esc(o.fee)}</span></div><div class="fact"><span class="label">Return profile</span><span class="val">${esc(o.ret)}</span></div><div class="fact"><span class="label">Closes</span><span class="val">${esc(o.close)}</span></div></div>
+    <div><div class="label">Your amount</div><div class="amount-big" id="invAmt">${fmt(a)}</div>
+      <input type="range" id="invRange" min="${o.min}" max="${max}" step="${o.step}" value="${a}" aria-label="Amount">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>Min ${fmt(o.min)}</span><span>Your max ${fmt(max)}</span></div></div>
+    <div class="quick">${quick.map(v=>`<button class="chip" data-act="invq" data-v="${v}" aria-pressed="${v===a}">${v===max?'Max · ':''}${fmt(v)}</button>`).join('')}</div>
+    <div class="field"><label for="invInput">Or type an amount</label><input type="number" id="invInput" min="${o.min}" max="${max}" step="${o.step}" value="${a}"></div>
+    <div class="chips"><button class="btn gold" data-act="invnext">Review</button><button class="btn ghost" data-act="close">Cancel</button></div>`;
+  if(INV.step===1) body=`
+    <div class="review"><div class="ln"><span>Offering</span><b style="font-family:var(--body)">${esc(o.name)}</b></div><div class="ln"><span>Amount</span><b>${fmt(a)}</b></div><div class="ln"><span>Structure</span><b style="font-family:var(--body)">${esc(o.type)}</b></div><div class="ln"><span>Terms</span><b style="font-family:var(--body)">${esc(o.term)}</b></div><div class="ln"><span>Fees</span><b style="font-family:var(--body)">${esc(o.fee)}</b></div><div class="ln"><span>Funding</span><b style="font-family:var(--body)">Wire within 10 business days of countersignature</b></div><div class="ln"><span>Capacity after</span><b>${fmt(INVESTOR.capacity-pledgedBy(INVESTOR.name)-a)}</b></div></div>
+    <ul class="ticks" style="font-size:13.5px"><li>You confirm you remain an accredited investor and have read the offering documents.</li><li>This subscription is binding once Carlisle countersigns. Wire instructions are confirmed by phone, never by email alone.</li><li>${esc(o.risk)} risk. You can lose the full amount.</li></ul>
+    <div class="sign"><div class="label">Sign with your full legal name</div><input type="text" id="signName" placeholder="${esc(INVESTOR.name)}" aria-label="Signature" autocomplete="off"></div>
+    <div class="chips"><button class="btn gold" data-act="invsubmit">Submit subscription</button><button class="btn ghost" data-act="invback">Back</button></div>`;
+  if(INV.step===2) body=`
+    <svg class="done-mark" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="36"/><path d="M24 41 L35 52 L57 29"/></svg>
+    <h3 style="text-align:center;font-family:var(--display);font-size:26px">Subscription received</h3>
+    <p style="text-align:center;color:var(--muted)">${fmt(a)} into ${esc(o.name)}. Subscription documents go out within one business day, and you can follow every step under Invest.</p>
+    <div class="review"><div class="ln"><span>Reference</span><b>CC-${String(Date.now()).slice(-6)}</b></div><div class="ln"><span>Next</span><b style="font-family:var(--body)">Docs sent</b></div></div>
+    <div class="chips" style="justify-content:center"><button class="btn gold" data-act="tab" data-tab="invest">Track it</button><button class="btn ghost" data-act="close">Done</button></div>`;
+  openDrawer(INV.step===2?'Confirmed':'Invest',o.name,body);
+}
+function setInvAmount(v){const o=INV.offer; v=Math.round(v/o.step)*o.step; v=Math.max(o.min,Math.min(INV.max,v)); INV.amount=v; const a=$('#invAmt'),r=$('#invRange'),i=$('#invInput'); if(a)a.textContent=fmt(v); if(r)r.value=v; if(i&&document.activeElement!==i)i.value=v; document.querySelectorAll('[data-act="invq"]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.v===v));}
+async function submitPledge(){
+  const o=INV.offer, p={id:'p'+Date.now(),by:INVESTOR.name,offer:o.id,amount:INV.amount,status:0,date:today()};
+  let saved=false;
+  if(db&&uid&&canWrite){ try{ const ref=db.doc('pledges/'+uid); const s=await ref.get(); const items=(s.exists&&Array.isArray(s.data().items))?s.data().items.slice():[]; items.unshift(p); await ref.set({items,updatedAt:Date.now()}); saved=true; }catch{} }
+  if(!saved) S.pledges.unshift(p);
+  notify('team',`${INVESTOR.name} subscribed ${fmt(p.amount)} to ${o.name}`);
+  INV.step=2; renderInvest(); renderTabs();
+}
+function showNotifs(){
+  const list=S.notifs[S.role]; S.unseen[S.role]=0; renderTabs();
+  openDrawer('Notifications',S.role==='investor'?'For Margaret':'For the Carlisle team',list.length?`<div class="list">${list.map(n=>`<div class="row"><div class="main"><strong>${esc(n.t)}</strong><span>${esc(n.d)}</span></div></div>`).join('')}</div>`:'<p class="meta">Nothing new.</p>');
+}
+
+/* Progress bars: animate widths after paint */
+new MutationObserver(()=>{document.querySelectorAll('.prog i[data-w]').forEach(el=>{if(el.dataset.done)return;el.dataset.done=1;requestAnimationFrame(()=>{el.style.transition='width 1.2s cubic-bezier(.22,.8,.3,1)';el.style.width=el.dataset.w+'%';});});}).observe(document.body,{childList:true,subtree:true});
+
+/* ---------- Events ---------- */
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-act]'); if(!el)return;
+  const a=el.dataset.act, id=el.dataset.id;
+  if(a==='login')return login(el.dataset.role);
+  if(a==='switch'){closeDrawer();$('#app').hidden=true;$('#login').hidden=false;window.scrollTo(0,0);return;}
+  if(a==='tab'){closeDrawer();S.tab=el.dataset.tab;render();window.scrollTo(0,0);return;}
+  if(a==='close')return closeDrawer();
+  if(a==='notifs')return showNotifs();
+  if(a==='sheet')return sheet(id);
+  if(a==='doc')return doc(id);
+  if(a==='edoc')return edoc(id);
+  if(a==='docfilter'){S.docFilter=el.dataset.cat;return render();}
+  if(a==='newreq')return newReq(el.dataset.type,el.dataset.venture);
+  if(a==='invest')return investOpen(id);
+  if(a==='invq')return setInvAmount(+el.dataset.v);
+  if(a==='invnext'){INV.step=1;return renderInvest();}
+  if(a==='invback'){INV.step=0;return renderInvest();}
+  if(a==='invsubmit'){const n=($('#signName').value||'').trim(); if(n.toLowerCase()!==INVESTOR.name.toLowerCase()){toast('Type your full legal name exactly to sign');$('#signName').focus();return;} return submitPledge();}
+  if(a==='wired'){S.call4.hale='pending';notify('team','Margaret Hale marked her Call No. 4 wire as sent');toast('Marked as sent. Carlisle will confirm receipt.');return render();}
+  if(a==='confirm'){S.call4[id]='paid';if(id==='hale')notify('investor','Your $40,000 for Call No. 4 was received');toast('Receipt confirmed');return render();}
+  if(a==='advance'){const r=S.requests.find(x=>x.id==id);if(r&&r.status<3){r.status++;if(r.by===INVESTOR.name)notify('investor',`Your request "${r.type}" moved to ${STATUS[r.status]}`);toast(`Moved to ${STATUS[r.status]}`);render();}return;}
+  if(a==='advancep'){const r=S.pledges.find(x=>x.id==id)||S.dbPledges.find(x=>x.id==id);if(r&&r.status<3){r.status++;if(r.by===INVESTOR.name)notify('investor',`Your ${offerById(r.offer).name} subscription moved to ${PSTATUS[r.status]}`);toast(`Moved to ${PSTATUS[r.status]}`);render();}return;}
+  if(a==='asksugg'){ask(el.dataset.q);return;}
+  if(a==='askteam'){S.messages.push({from:'me',text:el.dataset.q,time:'Today, '+nowTime()});notify('team','New message from Margaret Hale');S.tab='messages';render();reply();return;}
+  if(a==='ein'){S.einShown=!S.einShown;return render();}
+  if(a==='check'){S.checks[id]=el.checked;return render();}
+});
+document.addEventListener('input',e=>{ if(e.target.id==='invRange'||e.target.id==='invInput'){const v=+e.target.value; if(!isNaN(v)&&v>0)setInvAmount(v);} });
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeDrawer();
+  if(e.key==='Enter'&&e.target.matches('tr.clickable,.row.clickable')){e.target.click();}
+});
+async function ask(q){
+  const entry={q,a:'',pending:true}; S.askLog.push(entry); render();
+  entry.a=await answer(q); entry.pending=false; if(S.tab==='ask')softRender();
+}
+document.addEventListener('submit',async e=>{
+  e.preventDefault(); const f=e.target, kind=f.dataset.form;
+  if(kind==='msg'){const i=$('#msgInput');const t=i.value.trim();if(!t)return;S.messages.push({from:'me',text:t,time:'Today, '+nowTime()});notify('team','New message from Margaret Hale');render();reply();}
+  if(kind==='ask'){const i=$('#askInput');const q=i.value.trim();if(!q)return;ask(q);}
+  if(kind==='req'){
+    const t=$('#reqText').value.trim();
+    S.requests.unshift({id:nextId++,by:INVESTOR.name,type:f.dataset.type,detail:t||'No details added.',status:0,date:today()});
+    notify('team',`Margaret Hale: ${f.dataset.type}`);
+    closeDrawer(); S.tab='concierge'; render(); toast('Request sent. Track it under Concierge.');
+  }
+  if(kind==='publish'){
+    const title=$('#pubTitle').value.trim(), body=$('#pubBody').value.trim(); if(!title||!body){toast('Add a headline and the update text');return;}
+    const u={title,body,venture:$('#pubVenture').value,date:today(),ts:Date.now()};
+    let saved=false; if(db&&canWrite){ try{ await db.collection('updates').add(u); saved=true; }catch{} }
+    if(!saved) S.updates.unshift(u);
+    notify('investor','New update: '+title); toast(saved?'Published live to every investor':'Published to all Fund I investors');
+    S.tab='t-overview'; render();
+  }
+});
+function reply(){
+  const t={from:'them',typing:true,time:''}; S.messages.push(t); if(S.tab==='messages')softRender();
+  setTimeout(()=>{t.typing=false;t.text='Got it, thanks Margaret. I will get back to you today.';t.time='Today, '+nowTime();if(S.role==='investor'&&S.tab==='messages')softRender();},1600);
+}
+})();
+</script>

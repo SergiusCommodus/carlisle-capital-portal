@@ -1,0 +1,61 @@
+{
+ "source": "Robinhood",
+ "account": {
+  "label": "Agentic",
+  "type": "Individual cash",
+  "last4": "1395"
+ },
+ "asOf": "2026-10-07T20:04:00Z",
+ "totalValue": 5476.64,
+ "equityValue": 5352.87,
+ "cash": 123.77,
+ "cryptoValue": 0,
+ "positions": [
+  {
+   "symbol": "VZ",
+   "name": "Verizon",
+   "qty": 20.565383,
+   "avg": 48.63,
+   "price": 45.7638,
+   "prevClose": 45.98
+  },
+  {
+   "symbol": "IBM",
+   "name": "IBM",
+   "qty": 2.746349,
+   "avg": 236.68,
+   "price": 220.47,
+   "prevClose": 221.29
+  },
+  {
+   "symbol": "QCOM",
+   "name": "Qualcomm",
+   "qty": 3.396276,
+   "avg": 163.54,
+   "price": 177.12,
+   "prevClose": 181.03
+  },
+  {
+   "symbol": "TSM",
+   "name": "Taiwan Semiconductor",
+   "qty": 2.840035,
+   "avg": 422.53,
+   "price": 472.15,
+   "prevClose": 482.3
+  },
+  {
+   "symbol": "HOOD",
+   "name": "Robinhood Markets",
+   "qty": 17.0,
+   "avg": 117.02,
+   "price": 109.52,
+   "prevClose": 112.0
+  }
+ ],
+ "feed": [
+  {
+   "t": "2026-10-07T20:04:00Z",
+   "text": "Portfolio synced from Robinhood by the Carlisle agent. 5 positions, $5,477 account value."
+  }
+ ]
+}
