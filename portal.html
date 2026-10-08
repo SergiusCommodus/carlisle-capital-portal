@@ -2,46 +2,50 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Cormorant+Garamond:ital,wght@1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap">
 <style>
-/* Layout: one calm column (max 1120px) on white; a slim header with the mark and text tabs; every page opens with a big value and a scrubbable chart, then flat sections divided by hairlines. One accent (gold) for actions, green and red only for money moving. */
+/* Layout: one calm column (max 1120px) on veined ivory marble; a header finished with a gold Greek key band; every page opens with an inscription style heading and a big value over a scrubbable chart. Gold leaf marks the main action, olive marks gains, terracotta marks losses. */
 :root{
-  --bg:#FFFFFF; --surface:#FFFFFF; --surface2:#F5F5F3; --ink:#0B0F14; --muted:#6E7681; --line:#E8E8E4; --line2:#F0F0ED;
-  --navy:#111418; --navy2:#0B0D10; --navy3:#262B33;
-  --c1:#111418; --c2:#A8915A; --c3:#7A8594; --c4:#C9B178; --c5:#3D4550; --c6:#D7D2C4; --c7:#8C6D3F;
-  --gold:#A8915A; --gold2:#C9B178; --gold-soft:#F6F1E5;
-  --accent:#0A2541; --accent-ink:#FFFFFF;
-  --good:#0E9F6E; --good-soft:#E6F6EF; --warn:#B7791F; --warn-soft:#FBF1DC; --bad:#D9453B; --bad-soft:#FCE8E6;
-  --band:#0A2541; --band2:#061A30; --band-ink:#F3F0E8; --band-muted:#9FB0C4; --btn:#0A2541; --btn-ink:#FFFFFF;
-  --shadow:0 12px 40px rgba(11,15,20,.08);
-  --brand:"Cinzel",Georgia,serif;
-  --display:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --bg:#F7F4EE; --surface:#FFFDF9; --surface2:#EFEADF; --ink:#17140F; --muted:#6B6458; --line:#E0D8C8; --line2:#EAE4D7;
+  --navy:#17140F; --navy2:#0E0C09; --navy3:#2C261D;
+  --gold:#8A6A2C; --gold2:#C9A85C; --gold-soft:#F2E8D2;
+  --accent:#17140F; --accent-ink:#F7F4EE; --btn:#17140F; --btn-ink:#F7F4EE;
+  --good:#4F6B2E; --good-soft:#E6ECD9; --warn:#A06A12; --warn-soft:#F6EBD3; --bad:#B0442B; --bad-soft:#F6E2DA;
+  --band:#17140F; --band2:#0E0C09; --band-ink:#F3EEE4; --band-muted:#A39A8A;
+  --c1:#17140F; --c2:#B08D45; --c3:#7D7466; --c4:#C9B48A; --c5:#6E2B3A; --c6:#3F3A33; --c7:#8C6A3A;
+  --marble:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.0016 .0055' numOctaves='5' stitchTiles='stitch' seed='11'/><feColorMatrix values='0 0 0 0 0.42 0 0 0 0 0.37 0 0 0 0 0.3 1 0 0 0 0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 0 .2 1 .2 0 0 0 0 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23f)' opacity='0.13'/></svg>"); --marble-dark:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.0022 .007' numOctaves='5' stitchTiles='stitch' seed='7'/><feColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.72 0 0 0 0 0.45 1 0 0 0 0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 0 0 1 0 0 0 0 0 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23f)' opacity='0.2'/></svg>"); --key:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='14' fill='none' stroke='%23B08D45' stroke-width='1.4'><path d='M0 13H18M1 13V1H14V10H5V5H10'/></svg>");
+  --leaf:linear-gradient(180deg,#D6B96E 0%,#B08D45 55%,#94742F 100%); --leaf-ink:#17140F;
+  --shadow:0 14px 40px rgba(23,20,15,.10);
+  --brand:"Cinzel","Trajan Pro",Georgia,serif;
+  --display:"Cinzel","Trajan Pro",Georgia,serif;
   --body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"DM Sans",system-ui,sans-serif;
-  --r:16px; --ease:cubic-bezier(.2,.8,.2,1);
+  --r:10px; --ease:cubic-bezier(.2,.8,.2,1);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0B0D10; --surface:#0B0D10; --surface2:#15181D; --ink:#F2F2EF; --muted:#9AA3AE; --line:#22262C; --line2:#1A1E24;
-  --gold:#D4BB7C; --gold2:#E6D29E; --gold-soft:#231F14;
-  --accent:#F2F2EF; --accent-ink:#0B0D10; --btn:#F2F2EF; --btn-ink:#0B0D10;
-  --good:#33D17A; --good-soft:#0F2A1D; --warn:#E3B45C; --warn-soft:#2A2212; --bad:#FF6B5C; --bad-soft:#331B18;
-  --band:#0B0D10; --band2:#06080B; --band-ink:#F2F2EF; --band-muted:#8A929C;
-  --navy:#1C2128; --navy2:#14171C; --navy3:#2A3039;
-  --c1:#F2F2EF; --c2:#D4BB7C; --c3:#8A949F; --c4:#8C7A50; --c5:#C8CDD3; --c6:#5A626C; --c7:#E6D29E;
-  --shadow:0 12px 40px rgba(0,0,0,.5); color-scheme:dark;}}
+  --bg:#100E0B; --surface:#100E0B; --surface2:#1C1914; --ink:#EFE9DD; --muted:#A39A8A; --line:#2E2A22; --line2:#221F19;
+  --navy:#1E1A14; --navy2:#16130F; --navy3:#2C261D;
+  --gold:#D4B46A; --gold2:#E8D29C; --gold-soft:#2A2314;
+  --accent:#EFE9DD; --accent-ink:#100E0B; --btn:#EFE9DD; --btn-ink:#100E0B;
+  --good:#A3C26B; --good-soft:#1E2814; --warn:#E3B45C; --warn-soft:#2E2412; --bad:#E8806A; --bad-soft:#331C15;
+  --band:#100E0B; --band2:#0A0907; --band-ink:#EFE9DD; --band-muted:#A39A8A;
+  --c1:#EFE9DD; --c2:#D4B46A; --c3:#A39A8A; --c4:#8C7A50; --c5:#B0566A; --c6:#6E675C; --c7:#E8D29C;
+  --marble:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.0018 .006' numOctaves='5' stitchTiles='stitch' seed='4'/><feColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.72 0 0 0 0 0.45 1 0 0 0 0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 0 0 1 0 0 0 0 0 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23f)' opacity='0.045'/></svg>");
+  --shadow:0 14px 40px rgba(0,0,0,.5); color-scheme:dark;}}
 :root[data-theme="dark"]{
-  --bg:#0B0D10; --surface:#0B0D10; --surface2:#15181D; --ink:#F2F2EF; --muted:#9AA3AE; --line:#22262C; --line2:#1A1E24;
-  --gold:#D4BB7C; --gold2:#E6D29E; --gold-soft:#231F14;
-  --accent:#F2F2EF; --accent-ink:#0B0D10; --btn:#F2F2EF; --btn-ink:#0B0D10;
-  --good:#33D17A; --good-soft:#0F2A1D; --warn:#E3B45C; --warn-soft:#2A2212; --bad:#FF6B5C; --bad-soft:#331B18;
-  --band:#0B0D10; --band2:#06080B; --band-ink:#F2F2EF; --band-muted:#8A929C;
-  --navy:#1C2128; --navy2:#14171C; --navy3:#2A3039;
-  --c1:#F2F2EF; --c2:#D4BB7C; --c3:#8A949F; --c4:#8C7A50; --c5:#C8CDD3; --c6:#5A626C; --c7:#E6D29E;
-  --shadow:0 12px 40px rgba(0,0,0,.5); color-scheme:dark;}
+  --bg:#100E0B; --surface:#100E0B; --surface2:#1C1914; --ink:#EFE9DD; --muted:#A39A8A; --line:#2E2A22; --line2:#221F19;
+  --navy:#1E1A14; --navy2:#16130F; --navy3:#2C261D;
+  --gold:#D4B46A; --gold2:#E8D29C; --gold-soft:#2A2314;
+  --accent:#EFE9DD; --accent-ink:#100E0B; --btn:#EFE9DD; --btn-ink:#100E0B;
+  --good:#A3C26B; --good-soft:#1E2814; --warn:#E3B45C; --warn-soft:#2E2412; --bad:#E8806A; --bad-soft:#331C15;
+  --band:#100E0B; --band2:#0A0907; --band-ink:#EFE9DD; --band-muted:#A39A8A;
+  --c1:#EFE9DD; --c2:#D4B46A; --c3:#A39A8A; --c4:#8C7A50; --c5:#B0566A; --c6:#6E675C; --c7:#E8D29C;
+  --marble:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='.0018 .006' numOctaves='5' stitchTiles='stitch' seed='4'/><feColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.72 0 0 0 0 0.45 1 0 0 0 0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 0 0 1 0 0 0 0 0 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23f)' opacity='0.045'/></svg>");
+  --shadow:0 14px 40px rgba(0,0,0,.5); color-scheme:dark;}
 
 *{box-sizing:border-box}
 html,body{height:100%}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{background:var(--bg) var(--marble) 0 0/1200px 800px repeat;color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{text-wrap:balance;margin:0;letter-spacing:-.01em}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
@@ -448,6 +452,66 @@ main.in .list>.row:nth-child(n+6),main.in tbody>tr:nth-child(n+6){animation-dela
 .secure i{width:7px;height:7px;border-radius:50%;background:var(--good)}
 .demo{background:var(--bg)}
 
+
+/* ---------- Classical theme ---------- */
+header.band{background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:0}
+header.band::after{content:"";display:block;height:10px;background:var(--key) 0 center/13.5px 10.5px repeat-x;opacity:.7}
+.brand b{font-size:15px;letter-spacing:.2em}
+.brand small{font-family:var(--brand);letter-spacing:.24em;font-size:9.5px;text-transform:uppercase;color:var(--gold)}
+.tab{font-family:var(--display);font-size:12.5px;letter-spacing:.08em;font-weight:600}
+.tab-ink{background:var(--gold);height:2px}
+.page-head h1{font-family:var(--display);font-weight:600;font-size:32px;letter-spacing:.02em}
+.page-head p{font-size:14px}
+.card h2,.post h3,.offer-top h3,.dr-head h2,.paper h4{font-family:var(--display);font-weight:600;letter-spacing:.04em}
+.card h2{font-size:16px}
+.card-head h2::after{content:"";display:block;width:32px;height:1px;background:var(--gold);margin-top:9px}
+.card{border-top-color:var(--line)}
+.hero .label{font-family:var(--display);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.hero-val{font-family:var(--display);font-weight:600;letter-spacing:.01em}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.stat .label{font-family:var(--display);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.stat.key{background:var(--navy2) var(--marble-dark) center/900px 600px;border:1px solid rgba(201,168,92,.45)}
+.stat.key .label{color:var(--gold2)}
+.stat.key .v{color:#E8D29C}
+.btn{border-radius:6px;letter-spacing:.02em}
+.btn.gold{background:var(--leaf);color:var(--leaf-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 1px 2px rgba(23,20,15,.2)}
+.btn.ghost{background:var(--surface2)}
+.chip{border-radius:6px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.icon-btn{border-radius:8px;background:var(--surface2)}
+.ranges button{border-radius:6px;font-family:var(--display);letter-spacing:.06em}
+.ranges button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.pill{border-radius:4px}
+.chg{border-radius:4px}
+.alert{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--gold)}
+.offer{background:var(--surface);border-radius:var(--r)}
+.offer-top{border-top:3px solid var(--gold2)}
+.prog i{background:var(--leaf)}
+.svc button,.sheet-stats div,.review,.qa-a,.ticker{background:var(--surface)}
+.svc button{border:1px solid var(--line)}
+.ticker{border:1px solid var(--line);border-radius:8px}
+.ticker::before{background:linear-gradient(90deg,var(--surface),transparent)} .ticker::after{background:linear-gradient(-90deg,var(--surface),transparent)}
+.ticker-track b{font-family:var(--display);letter-spacing:.06em}
+input[type=text],input[type=number],select,textarea{background:var(--surface);border:1px solid var(--line);border-radius:8px}
+.login-plate{background:var(--navy2) var(--marble-dark) center/900px 600px;border:1px solid rgba(201,168,92,.45);border-radius:14px}
+.login-plate::before{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:var(--key) 0 center/13.5px 10.5px repeat-x;opacity:.75}
+.login-head h1{font-family:var(--brand);font-size:12px;letter-spacing:.34em}
+.profile{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.profile:hover{background:var(--surface);border-color:var(--gold2)}
+.avatar{font-family:var(--brand);border:1px solid var(--gold2)}
+.markwrap,.foot-brand .markwrap{background:var(--navy2) var(--marble-dark) center/600px 400px}
+.foot{border-top:0;position:relative}
+.foot::before{content:"";position:absolute;top:0;left:16px;right:16px;height:10px;background:var(--key) 0 center/13.5px 10.5px repeat-x;opacity:.6}
+.foot-top{padding-top:18px}
+.paper{background:var(--surface)}
+.msg.me{background:var(--ink);color:var(--bg)}
+#drawer{background:var(--bg) var(--marble) 0 0/1200px 800px}
+#intro .half{background:#0E0C09 var(--marble-dark) center/1200px 800px}
+#intro .half.t::after,#intro .half.b::before{content:"";position:absolute;left:0;right:0;height:10px;background:var(--key) 0 center/13.5px 10.5px repeat-x;opacity:.55}
+#intro .half.t::after{bottom:0} #intro .half.b::before{top:0}
+.intro-word{font-family:var(--brand);letter-spacing:.46em;font-size:13px}
+.roman{font-family:var(--display);letter-spacing:.04em}
+
 @media (max-width:640px){
   .who{display:none}
   .page-head h1{font-size:26px}
@@ -523,7 +587,7 @@ main.in .list>.row:nth-child(n+6),main.in tbody>tr:nth-child(n+6){animation-dela
       <span class="secure"><i></i>Statements prepared by Carlisle Capital LLC · Brokerage data from Robinhood</span>
     </div>
     <p>Private investments are speculative, illiquid and can lose value. Past performance does not guarantee future results. Nothing in this portal is an offer to sell, or a solicitation of an offer to buy, any security. Offers are made only through definitive offering documents to qualified investors. Brokerage positions are reported from an account at Robinhood and are not insured through Carlisle Capital.</p>
-    <div class="meta-row"><span>© 2026 Carlisle Capital LLC, a Florida limited liability company</span><span>Investor names, fund figures and documents in this demo are illustrative</span></div>
+    <div class="meta-row"><span>© MMXXVI Carlisle Capital LLC, a Florida limited liability company · Est. MMXXV</span><span>Investor names, fund figures and documents in this demo are illustrative</span></div>
   </footer>
 </div>
 <div id="route"></div>
@@ -558,12 +622,12 @@ const VENTURES = [
   blurb:'Historical and specialty firearms accessories: conversion cylinders, extended magazines for historical platforms, revolver speed loaders and paper cartridge kits.',
   kpis:[['Concepts scoped','45'],['Patent targets','3']],
   done:['Product board of 45 concepts ranked by startup capital and time to first sale','Regulatory scoping completed before each product advances','Engineering and design lead in place'],
-  next:'Founder agreement, first prototype tooling (funded by Call No. 4), provisional patent filings.', hist:[45000,45000,47500,51000,54000]},
+  next:'Founder agreement, first prototype tooling (funded by Call No. IV), provisional patent filings.', hist:[45000,45000,47500,51000,54000]},
  {id:'nexus', name:'Nexus', sector:'Consumer social app', stage:'Building to beta', tone:'gold', cost:30000, val:33000,
   blurb:'One home for real friend groups: chat, plans, shared calendars, bill splitting and finding new people. Gaming crews are an early use case.',
   kpis:[['Build phase','Chat'],['Beta','Private']],
   done:['Rebranded from Roundtable with a space theme','Build order set: chat, then groups, then discovery','Landing page and live demo in progress'],
-  next:'Private beta with founding friend groups (funded by Call No. 4).', hist:[0,0,30000,31000,33000]},
+  next:'Private beta with founding friend groups (funded by Call No. IV).', hist:[0,0,30000,31000,33000]},
  {id:'astraeus', name:'ASTRAEUS', sector:'Space lifestyle brand', stage:'Storefront live', tone:'good', cost:25000, val:27500,
   blurb:'Space exploration gear and apparel: watches, protective cases, field gear and mission collections grounded in NASA era engineering.',
   kpis:[['Collections','6'],['Storefront','Live']],
@@ -631,7 +695,7 @@ const OFFERS = [
 
 const DOCS = [
  {id:'q3letter',title:'Q3 2026 Quarterly Letter',cat:'Reports',date:'Oct 1, 2026',kind:'letter'},
- {id:'call4',title:'Capital Call Notice No. 4',cat:'Capital calls',date:'Oct 7, 2026',kind:'call'},
+ {id:'call4',title:'Capital Call Notice No. IV',cat:'Capital calls',date:'Oct 7, 2026',kind:'call'},
  {id:'cas3',title:'Q3 2026 Capital Account Statement',cat:'Statements',date:'Oct 1, 2026',kind:'cas',lines:[['Beginning balance, Jul 1',158900],['Contributions',0],['Change in value',12500],['Distributions',0]],end:171400},
  {id:'cas2',title:'Q2 2026 Capital Account Statement',cat:'Statements',date:'Jul 1, 2026',kind:'cas',lines:[['Beginning balance, Apr 1',103200],['Contributions (Call No. 3)',50000],['Change in value',5700],['Distributions',0]],end:158900},
  {id:'k1',title:'2025 K1 Tax Package',cat:'Tax',date:'Mar 12, 2026',kind:'tax'},
@@ -645,19 +709,19 @@ const S = {
   call4:{hale:'open',whitcomb:'paid',duarte:'open',harbor:'paid'},
   requests:[
     {id:1,by:'Margaret Hale',type:'Request a document',detail:'Please resend the 2025 K1 tax package to my accountant.',status:2,date:'Oct 2, 2026'},
-    {id:2,by:'Thomas Whitcomb',type:'Schedule a call',detail:'Would like 30 minutes on the Continental tooling plan before funding Call No. 4.',status:0,date:'Oct 6, 2026'}],
+    {id:2,by:'Thomas Whitcomb',type:'Schedule a call',detail:'Would like 30 minutes on the Continental tooling plan before funding Call No. IV.',status:0,date:'Oct 6, 2026'}],
   pledges:[
     {id:'p1',by:'Harbor Oak Family Office',offer:'continental',amount:50000,status:3,date:'Sep 28, 2026'},
     {id:'p2',by:'Thomas Whitcomb',offer:'nexus',amount:15000,status:1,date:'Oct 5, 2026'}],
   updates:[
-    {title:'Q3 letter: Fund I value up 7.9% for the quarter',venture:'Fund I',date:'Oct 1, 2026',ts:1759300000000,body:'Fund value rose from $158,900 to $171,400 on your interest, led by Continental Firearms and Old Glory Archives. Capital Call No. 4 funds Continental prototype tooling and the Nexus private beta. The full letter is in Documents.'},
+    {title:'Q3 letter: Fund I value up 7.9% for the quarter',venture:'Fund I',date:'Oct 1, 2026',ts:1759300000000,body:'Fund value rose from $158,900 to $171,400 on your interest, led by Continental Firearms and Old Glory Archives. Capital Call No. IV funds Continental prototype tooling and the Nexus private beta. The full letter is in Documents.'},
     {title:'ASTRAEUS storefront is live',venture:'ASTRAEUS',date:'Sep 18, 2026',ts:1758200000000,body:'The ASTRAEUS store is published with six mission collections. The first product drop is being planned now.'},
     {title:'Old Glory Archives passes 5 million views',venture:'Old Glory Archives',date:'Aug 21, 2026',ts:1755800000000,body:'The channel passed 5.4 million post views and is monetized through TikTok Creator Rewards. Next step is cross posting to YouTube Shorts.'}],
   messages:[
-    {from:'them',text:'Margaret, the Q3 letter and your capital account statement are posted. Happy to walk through Call No. 4 any time.',time:'Oct 1, 9:12 AM'},
+    {from:'them',text:'Margaret, the Q3 letter and your capital account statement are posted. Happy to walk through Call No. IV any time.',time:'Oct 1, 9:12 AM'},
     {from:'me',text:'Thanks George. Is the Continental tooling on schedule?',time:'Oct 1, 2:40 PM'},
     {from:'them',text:'Yes. Tooling quotes are in and the first prototype run is planned for December.',time:'Oct 1, 3:05 PM'}],
-  notifs:{investor:[{t:'Capital Call No. 4 issued: $40,000 due Nov 14',d:'Oct 7, 2026'},{t:'Six offerings are open for additional investment',d:'Oct 7, 2026'}],team:[{t:'Thomas Whitcomb asked to schedule a call',d:'Oct 6, 2026'}]},
+  notifs:{investor:[{t:'Capital Call No. IV issued: $40,000 due Nov 14',d:'Oct 7, 2026'},{t:'Six offerings are open for additional investment',d:'Oct 7, 2026'}],team:[{t:'Thomas Whitcomb asked to schedule a call',d:'Oct 6, 2026'}]},
   unseen:{investor:2,team:1},
   askLog:[], einShown:false,
   checks:{oa:false,exa:false,ss4:false,bank:false,addr:false,founder:false},
@@ -836,6 +900,7 @@ function softRender(){ /* re-render without entrance animation and without reset
 }
 
 /* ---------- Shared bits ---------- */
+const roman=n=>['','I','II','III','IV','V','VI','VII','VIII','IX','X'][n]||String(n);
 const pill=(t,tone)=>`<span class="pill ${tone}">${esc(t)}</span>`;
 const callPill=s=>s==='paid'?pill('Paid','good'):s==='pending'?pill('Wire sent, confirming','warn'):pill('Due Nov 14','bad');
 function stepper(st,labels=STATUS){return `<div class="stepper">${labels.map((l,i)=>`<div class="step ${i<st?'done':i===st?(st===3?'done':'now'):''}"><i></i>${l}</div>`).join('')}</div>`;}
@@ -899,7 +964,7 @@ VIEWS.overview=()=>{
   return `<div class="page-head"><div><h1>${greet()}, ${INVESTOR.first}</h1><p>${FUND.name} · values as of ${FUND.asOf}</p></div><div class="chips"><button class="btn gold" data-act="tab" data-tab="invest">Invest more</button></div></div>
   ${hero('fund',{label:'Your Fund I interest'})}
   ${ticker()}
-  ${due!=='paid'?`<div class="alert"><div class="txt"><strong>${due==='open'?'Capital Call No. 4 · $40,000 due Nov 14, 2026':'Wire for Call No. 4 marked sent, awaiting confirmation'}</strong><span>${due==='open'?'Funds Continental prototype tooling and the Nexus private beta.':'The Carlisle team will confirm receipt and update your account.'}</span></div><button class="btn" data-act="tab" data-tab="calls">View call</button></div>`:''}
+  ${due!=='paid'?`<div class="alert"><div class="txt"><strong>${due==='open'?'Capital Call No. IV · $40,000 due Nov 14, 2026':'Wire for Call No. IV marked sent, awaiting confirmation'}</strong><span>${due==='open'?'Funds Continental prototype tooling and the Nexus private beta.':'The Carlisle team will confirm receipt and update your account.'}</span></div><button class="btn" data-act="tab" data-tab="calls">View call</button></div>`:''}
   <div class="stats">
     <div class="stat"><span class="label">Commitment</span><span class="v" data-count="${INVESTOR.commit}">$0</span><span class="s">Fund I, vintage 2025</span></div>
     <div class="stat"><span class="label">Paid in</span><span class="v" data-count="${PAID}">$0</span><span class="s">${Math.round(PAID/INVESTOR.commit*100)}% called</span></div>
@@ -979,7 +1044,7 @@ VIEWS.invest=()=>{
 VIEWS.calls=()=>{
   const st=S.call4.hale;
   return `<div class="page-head"><div><h1>Capital calls</h1><p>${fmt(PAID)} of ${fmt(INVESTOR.commit)} called to date</p></div></div>
-  <div class="card"><div class="card-head"><div><span class="label">Open call</span><h2 style="font-family:var(--display);font-size:27px;margin-top:2px">Call No. 4 · ${fmt(INVESTOR.commit*0.16)}</h2></div>${callPill(st)}</div>
+  <div class="card"><div class="card-head"><div><span class="label">Open call</span><h2 style="font-family:var(--display);font-size:27px;margin-top:2px">Call No. IV · ${fmt(INVESTOR.commit*0.16)}</h2></div>${callPill(st)}</div>
     <div class="facts">
       <div class="fact"><span class="label">Due date</span><span class="val">Nov 14, 2026</span></div>
       <div class="fact"><span class="label">Share of commitment</span><span class="val num">16%</span></div>
@@ -990,7 +1055,7 @@ VIEWS.calls=()=>{
     <div class="chips">${st==='open'?`<button class="btn gold" data-act="wired">I've sent the wire</button>`:''}<button class="btn ghost" data-act="doc" data-id="call4">View notice</button><button class="btn ghost" data-act="newreq" data-type="Schedule a call">Ask about this call</button></div>
   </div>
   <div class="card"><h2 style="margin-bottom:8px">History</h2><div class="table-wrap"><table><thead><tr><th>Call</th><th>Date</th><th>Purpose</th><th class="r">Amount</th><th>Status</th></tr></thead><tbody>
-  ${CALLS.map(c=>`<tr><td>No. ${c.no}</td><td>${c.date}</td><td>${esc(c.purpose)}</td><td class="r mono">${fmt(INVESTOR.commit*c.pct)}</td><td>${c.open?callPill(st):pill('Paid','good')}</td></tr>`).join('')}
+  ${CALLS.map(c=>`<tr><td class="roman">No. ${roman(c.no)}</td><td>${c.date}</td><td>${esc(c.purpose)}</td><td class="r mono">${fmt(INVESTOR.commit*c.pct)}</td><td>${c.open?callPill(st):pill('Paid','good')}</td></tr>`).join('')}
   </tbody></table></div></div>`;
 };
 VIEWS.documents=()=>{
@@ -1024,11 +1089,11 @@ function ruleAnswer(q){
   const v=VENTURES.find(v=>s.includes(v.name.toLowerCase())||s.includes(v.id)||(v.full&&s.includes(v.full.toLowerCase()))||(v.id==='oggames'&&s.includes('world at war'))||(v.id==='ogarchives'&&s.includes('archive')));
   if(v) return `${esc(v.name)} is at the ${esc(v.stage.toLowerCase())} stage. Your cost is ${fmt(v.cost)} and the current value is ${fmt(v.val)} (${(v.val/v.cost).toFixed(2)}x). Next: ${esc(v.next)} <button class="link" data-act="sheet" data-id="${v.id}">Open tear sheet</button>`;
   if(/sleeve|public|stock|robinhood|market|today/.test(s)&&S.bk){const c=bkCalc(S.bk);return `The public markets sleeve is worth ${fmt2(c.total)} (${pct(c.dayPct)} today), your share ${fmt2(c.total*SHARE)}. Largest position: ${c.pos[0].symbol} at ${fmt2(c.pos[0].mv)}. Updated ${ago(S.bk.asOf)}. <button class="link" data-act="tab" data-tab="markets">Open public markets</button>`;}
-  if(/call|due|wire/.test(s)) return S.call4.hale==='paid'?'Call No. 4 is paid. No other calls are open.':`Call No. 4 is ${fmt(40000)}, due Nov 14, 2026. ${S.call4.hale==='pending'?'Your wire is marked as sent and is awaiting confirmation.':'It funds Continental tooling and the Nexus beta.'} <button class="link" data-act="tab" data-tab="calls">Go to capital calls</button>`;
+  if(/call|due|wire/.test(s)) return S.call4.hale==='paid'?'Call No. IV is paid. No other calls are open.':`Call No. IV is ${fmt(40000)}, due Nov 14, 2026. ${S.call4.hale==='pending'?'Your wire is marked as sent and is awaiting confirmation.':'It funds Continental tooling and the Nexus beta.'} <button class="link" data-act="tab" data-tab="calls">Go to capital calls</button>`;
   if(/tvpi|multiple|return|perform/.test(s)) return `Your TVPI is ${TVPI.toFixed(2)}x: ${fmt(VALUE)} in value on ${fmt(PAID)} paid in, as of ${FUND.asOf}. No distributions have been made yet.`;
   if(/still invest|capacity|can i invest|how much can|offer|minimum/.test(s)) return `You have ${fmt(INVESTOR.capacity-pledgedBy(INVESTOR.name))} of pre cleared capacity. Six offerings are open, with minimums from ${fmt(2500)} (ASTRAEUS facility) to ${fmt(25000)} (Fund I). <button class="link" data-act="tab" data-tab="invest">See offerings</button>`;
   if(/invest|paid|contribut|put in/.test(s)) return `You have paid in ${fmt(PAID)} across three capital calls, which is ${Math.round(PAID/INVESTOR.commit*100)}% of your ${fmt(INVESTOR.commit)} commitment.`;
-  if(/unfunded|remaining|left|commit/.test(s)) return `Your unfunded commitment is ${fmt(INVESTOR.commit-PAID)}. Call No. 4 would draw ${fmt(40000)} of it.`;
+  if(/unfunded|remaining|left|commit/.test(s)) return `Your unfunded commitment is ${fmt(INVESTOR.commit-PAID)}. Call No. IV would draw ${fmt(40000)} of it.`;
   if(/worth|value|nav|balance/.test(s)) return `Your capital account is worth ${fmt(VALUE)} as of ${FUND.asOf}, up ${fmt(VALUE-PAID)} on cost.`;
   if(/k1|k-1|tax/.test(s)) return `Your 2025 K1 tax package is in Documents. The 2026 package is targeted for mid March 2027. <button class="link" data-act="doc" data-id="k1">Open 2025 K1</button>`;
   if(/doc|statement|letter/.test(s)) return `You have ${DOCS.length} documents, including the Q3 2026 letter and capital account statement. <button class="link" data-act="tab" data-tab="documents">Open documents</button>`;
@@ -1069,7 +1134,7 @@ VIEWS['t-overview']=()=>{
     <div class="card lift"><div class="card-head"><h2>Needs attention</h2></div><div class="list">
       ${newP.map(p=>{const o=offerById(p.offer);return `<div class="row clickable" data-act="tab" data-tab="t-subs"><div class="main"><strong>${esc(p.by)}: ${fmt(p.amount)} into ${esc(o?o.name:p.offer)}</strong><span>${PSTATUS[p.status]} · ${esc(p.date)}</span></div><div class="end">${pill(p.status===0?'New':'Open',p.status===0?'bad':'gold')}</div></div>`;}).join('')}
       ${open.map(r=>`<div class="row clickable" data-act="tab" data-tab="t-requests"><div class="main"><strong>${esc(r.by)}: ${esc(r.type)}</strong><span>${STATUS[r.status]} · ${esc(r.date)}</span></div><div class="end">${pill(r.status===0?'New':'Open',r.status===0?'bad':'gold')}</div></div>`).join('')}
-      ${pending.map(l=>`<div class="row clickable" data-act="tab" data-tab="t-calls"><div class="main"><strong>${esc(l.name)}: wire to confirm</strong><span>Call No. 4 · ${fmt(l.commit*0.16)}</span></div><div class="end">${pill('Confirm','warn')}</div></div>`).join('')}
+      ${pending.map(l=>`<div class="row clickable" data-act="tab" data-tab="t-calls"><div class="main"><strong>${esc(l.name)}: wire to confirm</strong><span>Call No. IV · ${fmt(l.commit*0.16)}</span></div><div class="end">${pill('Confirm','warn')}</div></div>`).join('')}
       <div class="row clickable" data-act="tab" data-tab="t-entity"><div class="main"><strong>Entity housekeeping</strong><span>${doneChecks} of 6 items done</span></div><div class="end">${pill(doneChecks===6?'Done':'Open',doneChecks===6?'good':'warn')}</div></div>
     </div></div>
     ${marketsBlock(false)}
@@ -1100,15 +1165,15 @@ VIEWS['t-subs']=()=>{
 VIEWS['t-requests']=()=>`<div class="page-head"><div><h1>Requests</h1><p>Move each request forward. Investors see every step.</p></div></div>
   <div class="card">${S.requests.length?S.requests.map(r=>`<div class="req"><div class="req-top"><div><strong>${esc(r.type)}</strong><div class="meta">${esc(r.by)} · ${esc(r.date)}</div></div>${pill(STATUS[r.status],r.status===3?'good':r.status===0?'bad':'gold')}</div><p style="margin:4px 0 0">${esc(r.detail)}</p>${stepper(r.status)}
   <div class="chips" style="margin-top:10px">${r.status<3?`<button class="btn small" data-act="advance" data-id="${r.id}">Move to ${STATUS[r.status+1]}</button>`:''}<button class="btn small ghost" data-act="tab" data-tab="t-publish">Reply with an update</button></div></div>`).join(''):'<p class="meta">No requests.</p>'}</div>`;
-VIEWS['t-calls']=()=>`<div class="page-head"><div><h1>Capital calls</h1><p>Call No. 4 · 16% of commitments · due Nov 14, 2026</p></div></div>
+VIEWS['t-calls']=()=>`<div class="page-head"><div><h1>Capital calls</h1><p>Call No. IV · 16% of commitments · due Nov 14, 2026</p></div></div>
   <div class="stats"><div class="stat key"><span class="label">Collected</span><span class="v" data-count="${call4In()}">$0</span><span class="s">of ${fmt(call4Total)}</span></div>
   <div class="stat"><span class="label">Continental tooling</span><span class="v" data-count="${call4Total*0.6}">$0</span><span class="s">60% of call</span></div>
   <div class="stat"><span class="label">Nexus private beta</span><span class="v" data-count="${call4Total*0.4}">$0</span><span class="s">40% of call</span></div></div>
-  <div class="card"><div class="table-wrap"><table><thead><tr><th>Investor</th><th class="r">Commitment</th><th class="r">Call No. 4</th><th>Status</th><th></th></tr></thead><tbody>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>Investor</th><th class="r">Commitment</th><th class="r">Call No. IV</th><th>Status</th><th></th></tr></thead><tbody>
   ${LPS.map(l=>`<tr><td><strong>${esc(l.name)}</strong><div class="meta">${esc(l.type)}</div></td><td class="r mono">${fmt(l.commit)}</td><td class="r mono">${fmt(l.commit*0.16)}</td><td>${callPill(S.call4[l.id])}</td><td class="r">${S.call4[l.id]!=='paid'?`<button class="btn small" data-act="confirm" data-id="${l.id}">Confirm receipt</button>`:''}</td></tr>`).join('')}
   </tbody></table></div></div>`;
 VIEWS['t-investors']=()=>`<div class="page-head"><div><h1>Investors</h1><p>Fund I limited partners, values as of ${FUND.asOf}</p></div></div>
-  <div class="card"><div class="table-wrap"><table><thead><tr><th>Investor</th><th>Type</th><th class="r">Commitment</th><th class="r">Paid in</th><th class="r">Value</th><th class="r">New subs</th><th>Call No. 4</th></tr></thead><tbody>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>Investor</th><th>Type</th><th class="r">Commitment</th><th class="r">Paid in</th><th class="r">Value</th><th class="r">New subs</th><th>Call No. IV</th></tr></thead><tbody>
   ${LPS.map(l=>`<tr><td><strong>${esc(l.name)}</strong></td><td>${esc(l.type)}</td><td class="r mono">${fmt(l.commit)}</td><td class="r mono">${fmt(l.commit*0.6)}</td><td class="r mono">${fmt(l.commit*0.6*TVPI)}</td><td class="r mono">${fmt(allPledges().filter(p=>p.by===l.name).reduce((a,p)=>a+p.amount,0))}</td><td>${callPill(S.call4[l.id])}</td></tr>`).join('')}
   <tr><td><strong>Total</strong></td><td></td><td class="r mono"><strong>${fmt(fundCommit)}</strong></td><td class="r mono"><strong>${fmt(fundPaid)}</strong></td><td class="r mono"><strong>${fmt(fundVal)}</strong></td><td class="r mono"><strong>${fmt(allPledges().reduce((a,p)=>a+p.amount,0))}</strong></td><td></td></tr>
   </tbody></table></div></div>`;
@@ -1174,8 +1239,8 @@ function doc(id){
   const d=DOCS.find(x=>x.id===id); if(!d)return;
   let body='';
   if(d.kind==='cas') body=`<div class="paper"><h4>Capital Account Statement</h4><div class="meta">${INVESTOR.name} · ${FUND.name}</div><div class="lines">${d.lines.map(([k,v])=>`<div class="ln"><span>${k}</span><span>${v<0?'('+fmt(-v)+')':(k.startsWith('Change')&&v>0?'+':'')+fmt(v)}</span></div>`).join('')}<div class="ln total"><span>Ending balance</span><span>${fmt(d.end)}</span></div></div></div>`;
-  if(d.kind==='call') body=`<div class="paper"><h4>Capital Call Notice No. 4</h4><p>Dear ${INVESTOR.first},</p><p>Under your Subscription Agreement, Carlisle Capital Fund I calls 16% of your commitment, due November 14, 2026.</p><div class="lines"><div class="ln"><span>Continental Firearms prototype tooling</span><span>${fmt(24000)}</span></div><div class="ln"><span>Nexus private beta</span><span>${fmt(16000)}</span></div><div class="ln total"><span>Amount due</span><span>${fmt(40000)}</span></div></div><p class="meta">Wire instructions are confirmed by phone with George Serafin before you send funds.</p></div>`;
-  if(d.kind==='letter') body=`<div class="paper"><h4>Third Quarter 2026</h4><p>Your capital account rose from ${fmt(158900)} to ${fmt(171400)} in the quarter, a 7.9% gain, for a ${TVPI.toFixed(2)}x TVPI since inception.</p><p>Continental Firearms finished scoping its first products and secured tooling quotes. ASTRAEUS published its storefront. Old Glory Archives passed 5.4 million views and is monetized. Nexus set its build order and is heading to a private beta.</p><p>Capital Call No. 4 funds the two most time sensitive milestones: Continental tooling and the Nexus beta.</p><p>Thank you for your partnership.<br>George Serafin, Managing Member</p></div>`;
+  if(d.kind==='call') body=`<div class="paper"><h4>Capital Call Notice No. IV</h4><p>Dear ${INVESTOR.first},</p><p>Under your Subscription Agreement, Carlisle Capital Fund I calls 16% of your commitment, due November 14, 2026.</p><div class="lines"><div class="ln"><span>Continental Firearms prototype tooling</span><span>${fmt(24000)}</span></div><div class="ln"><span>Nexus private beta</span><span>${fmt(16000)}</span></div><div class="ln total"><span>Amount due</span><span>${fmt(40000)}</span></div></div><p class="meta">Wire instructions are confirmed by phone with George Serafin before you send funds.</p></div>`;
+  if(d.kind==='letter') body=`<div class="paper"><h4>Third Quarter 2026</h4><p>Your capital account rose from ${fmt(158900)} to ${fmt(171400)} in the quarter, a 7.9% gain, for a ${TVPI.toFixed(2)}x TVPI since inception.</p><p>Continental Firearms finished scoping its first products and secured tooling quotes. ASTRAEUS published its storefront. Old Glory Archives passed 5.4 million views and is monetized. Nexus set its build order and is heading to a private beta.</p><p>Capital Call No. IV funds the two most time sensitive milestones: Continental tooling and the Nexus beta.</p><p>Thank you for your partnership.<br>George Serafin, Managing Member</p></div>`;
   if(d.kind==='tax') body=`<div class="paper"><h4>2025 Schedule K1</h4><div class="meta">Partner: ${INVESTOR.name} · Tax year 2025</div><div class="lines"><div class="ln"><span>Capital contributed during year</span><span>${fmt(50000)}</span></div><div class="ln"><span>Ordinary business income (loss)</span><span>(${fmt(1850)})</span></div><div class="ln"><span>Ending capital account</span><span>${fmt(50800)}</span></div></div><p class="meta">Illustrative sample. Give your tax advisor the full package.</p></div>`;
   if(d.kind==='sub') body=`<div class="paper"><h4>Subscription Agreement</h4><p>${INVESTOR.name} subscribes for a limited partner interest in Carlisle Capital Fund I with a capital commitment of ${fmt(INVESTOR.commit)}, payable in installments on capital call notices.</p><div class="lines"><div class="ln"><span>Commitment</span><span>${fmt(INVESTOR.commit)}</span></div><div class="ln"><span>Investor status</span><span>Accredited</span></div><div class="ln"><span>Executed</span><span>Aug 29, 2025</span></div></div></div>`;
   if(d.kind==='ppm') body=`<div class="paper"><h4>Private Placement Memorandum</h4><p>Carlisle Capital Fund I, L.P. Offering of limited partner interests to accredited investors under Regulation D, Rule 506(b).</p><div class="lines"><div class="ln"><span>Target size</span><span>${fmt(1000000)}</span></div><div class="ln"><span>Minimum commitment</span><span>${fmt(25000)}</span></div><div class="ln"><span>Management fee</span><span>1.5%</span></div><div class="ln"><span>Carried interest</span><span>20% over 8% preferred</span></div><div class="ln"><span>Term</span><span>7 years, two 1 year extensions</span></div></div><p class="meta">Summary only. Read the full memorandum and risk factors before investing.</p></div>`;
@@ -1294,8 +1359,8 @@ document.addEventListener('click',e=>{
   if(a==='invnext'){INV.step=1;return renderInvest();}
   if(a==='invback'){INV.step=0;return renderInvest();}
   if(a==='invsubmit'){const n=($('#signName').value||'').trim(); if(n.toLowerCase()!==INVESTOR.name.toLowerCase()){toast('Type your full legal name exactly to sign');$('#signName').focus();return;} return submitPledge();}
-  if(a==='wired'){S.call4.hale='pending';notify('team','Margaret Hale marked her Call No. 4 wire as sent');toast('Marked as sent. Carlisle will confirm receipt.');return render();}
-  if(a==='confirm'){S.call4[id]='paid';if(id==='hale')notify('investor','Your $40,000 for Call No. 4 was received');toast('Receipt confirmed');return render();}
+  if(a==='wired'){S.call4.hale='pending';notify('team','Margaret Hale marked her Call No. IV wire as sent');toast('Marked as sent. Carlisle will confirm receipt.');return render();}
+  if(a==='confirm'){S.call4[id]='paid';if(id==='hale')notify('investor','Your $40,000 for Call No. IV was received');toast('Receipt confirmed');return render();}
   if(a==='advance'){const r=S.requests.find(x=>x.id==id);if(r&&r.status<3){r.status++;if(r.by===INVESTOR.name)notify('investor',`Your request "${r.type}" moved to ${STATUS[r.status]}`);toast(`Moved to ${STATUS[r.status]}`);render();}return;}
   if(a==='advancep'){const r=S.pledges.find(x=>x.id==id)||S.dbPledges.find(x=>x.id==id);if(r&&r.status<3){r.status++;if(r.by===INVESTOR.name)notify('investor',`Your ${offerById(r.offer).name} subscription moved to ${PSTATUS[r.status]}`);toast(`Moved to ${PSTATUS[r.status]}`);render();}return;}
   if(a==='asksugg'){ask(el.dataset.q);return;}
