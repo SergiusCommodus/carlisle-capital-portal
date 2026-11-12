@@ -259,7 +259,7 @@ tr.flash-down td{animation:flashDown 1.6s ease}
 .feed{display:grid;gap:0}
 .feed .card{padding:22px 0}
 .post{display:grid;gap:6px}
-.post h3{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.post .post-title{font-size:22px;font-weight:600;letter-spacing:-.02em}
 .post p{margin:0;max-width:68ch;color:var(--ink)}
 .meta{font-size:12.5px;color:var(--muted)}
 
@@ -448,9 +448,9 @@ header.band::after{content:"";display:block;height:1px;background:linear-gradien
 .tab{font-family:var(--display);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:400;padding:12px 12px 13px}
 .tab-ink{background:var(--gold);height:2px;box-shadow:0 0 10px rgba(246,217,135,.8)}
 .page-head h1{font-family:var(--display);font-weight:400;font-size:24px;letter-spacing:.04em;line-height:1.3}
-.card h2,.post h3,.offer-top h3,.dr-head h2,.paper h4{font-family:var(--display);font-weight:400;letter-spacing:.06em}
+.card h2,.post .post-title,.offer-top h3,.dr-head h2,.paper h4{font-family:var(--display);font-weight:400;letter-spacing:.06em}
 .card h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.16em}
-.post h3{font-size:17px;line-height:1.4}
+.post .post-title{font-size:17px;line-height:1.4}
 .offer-top h3{font-size:15px;line-height:1.4}
 .dr-head h2{font-size:19px;line-height:1.35}
 .card-head h2::after{content:"";display:block;width:28px;height:1px;background:var(--gold);margin-top:10px;box-shadow:0 0 8px rgba(246,217,135,.7)}
@@ -558,6 +558,14 @@ main{gap:22px}
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
   .chart .line,.hero-chart .ln{stroke-dashoffset:0}.chart .area,.chart .pt,.hero-chart .ar{opacity:1}.prog i{width:var(--w)!important}
 }
+
+/* Audit fixes */
+main,#app{overflow-x:clip}
+.post .post-title{margin:6px 0}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.hero-note{margin:2px 0 0;font-size:11.5px;color:var(--muted)}
+input[type="checkbox"]{width:20px;height:20px}
+input[type="range"]{min-height:28px}
 </style>
 
 <div id="intro" role="button" aria-label="Skip intro" tabindex="0">
@@ -885,19 +893,18 @@ function renderTabs(){
 }
 
 /* ---------- Hero: big value + scrubbable chart ---------- */
-function seriesFund(){ /* monthly path from inception to the latest statement, anchored on the quarterly values */
-  const pts=[]; const q=HISTORY; let seed=7;
-  for(let i=0;i<q.length-1;i++){ const a=q[i].val,b=q[i+1].val, pa=q[i].paid, pb=q[i+1].paid;
-    for(let m=0;m<3;m++){ seed=(seed*9301+49297)%233280; const r=seed/233280-.5; const k=m/3; const v=a+(b-a)*k + r*(b-a)*.35; const d=new Date(2025,6+i*3+m,30); pts.push({d,v:Math.round(v),paid:k<.34?pa:pb}); } }
-  const last=q[q.length-1]; pts.push({d:new Date(2026,8,30),v:last.val,paid:last.paid});
-  return pts;
+function seriesFund(){ /* quarter end statement values only, no interpolation */
+  const ends=[[2025,8,30],[2025,11,31],[2026,2,31],[2026,5,30],[2026,8,30]];
+  return HISTORY.map((h,i)=>({d:new Date(...(ends[i]||ends[ends.length-1])),v:h.val,paid:h.paid}));
 }
-function seriesSleeve(){ if(!S.bk)return []; const c=bkCalc(S.bk); const rk=S.range.sleeve; const day=rk==='1D';
-  const n=day?40:30, out=[]; let seed=11; const start=day?(c.total-c.day):(c.cost+(S.bk.cash||0))*0.995, end=c.total;
-  for(let i=0;i<n;i++){ seed=(seed*9301+49297)%233280; const r=seed/233280-.5; const k=i/(n-1); const amp=day?Math.abs(c.day)*.3+c.total*.0008:c.total*.01; const v=start+(end-start)*k + r*amp*Math.sin(Math.PI*k); const d=day?new Date(new Date(S.bk.asOf).getTime()-(n-1-i)*(6.5*3600000/(n-1))):new Date(Date.now()-(n-1-i)*86400000); out.push({d,v}); }
-  out[0].v=start; out[n-1].v=end; return out;
+function seriesSleeve(){ if(!S.bk)return []; const h=S.bk.history||{}, rk=S.range.sleeve, c=bkCalc(S.bk);
+  let src=rk==='1D'?h.intraday:h.daily;
+  if(src&&rk==='1M') src=src.slice(-23);
+  if(!src||src.length<2){ const prev=c.total-c.day; return [{d:new Date(new Date(S.bk.asOf).getTime()-6.5*3600000),v:prev},{d:new Date(S.bk.asOf),v:c.total}]; }
+  return src.map(p=>({d:new Date(p.t),v:p.v}));
 }
-const RANGES={fund:[['3M',3],['6M',6],['1Y',12],['ALL',999]],sleeve:[['1D',1],['1M',30],['ALL',999]]};
+const SLEEVE_WHEN={'1D':'Today, prior close to latest','1M':'Past month','3M':'Past 3 months'};
+const RANGES={fund:[['6M',2],['1Y',4],['ALL',999]],sleeve:[['1D',1],['1M',30],['3M',90]]};
 S.range={fund:'ALL',sleeve:'1D'};
 function hero(kind,opts){
   const all=kind==='fund'?seriesFund():seriesSleeve(); if(!all.length)return '';
@@ -912,7 +919,7 @@ function hero(kind,opts){
   return `<section class="hero ${tone}" data-hero="${kind}" data-mult="${mult}" data-base="${first}">
     <div class="label">${esc(opts.label)}</div>
     <div class="hero-val" id="hv-${kind}" data-text="${opts.cents?fmt2(last):fmt(last)}">${opts.cents?fmt2(last):fmt(last)}</div>
-    <div class="hero-chg"><b id="hc-${kind}">${(chg>=0?'+':'-')+(opts.cents?fmt2(Math.abs(chg)).slice(0):fmt(Math.abs(chg)))} (${(chg>=0?'+':'')+pct.toFixed(2)}%)</b><span class="when" id="hw-${kind}">${kind==='fund'?'Return on '+fmt(first)+' paid in':(rk==='1D'?'Today':'Return on cost')}</span>${opts.live?`<span class="pill live">Live</span>`:''}</div>
+    <div class="hero-chg"><b id="hc-${kind}">${(chg>=0?'+':'-')+(opts.cents?fmt2(Math.abs(chg)).slice(0):fmt(Math.abs(chg)))} (${(chg>=0?'+':'')+pct.toFixed(2)}%)</b><span class="when" id="hw-${kind}">${kind==='fund'?'Return on '+fmt(first)+' paid in':SLEEVE_WHEN[rk]}</span>${opts.live?syncPill(true):''}</div>
     <div class="hero-chart" id="hch-${kind}"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-label="${esc(opts.label)} over time">
       <line class="base" x1="0" x2="${W}" y1="${Math.max(P,Math.min(H-P,y(first))).toFixed(1)}" y2="${Math.max(P,Math.min(H-P,y(first))).toFixed(1)}"/>
       <defs><linearGradient id="g-${kind}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:currentColor;stop-opacity:.22"/><stop offset="1" style="stop-color:currentColor;stop-opacity:0"/></linearGradient></defs>
@@ -923,7 +930,7 @@ function hero(kind,opts){
       <circle class="halo" r="5" cx="${x(pts.length-1).toFixed(1)}" cy="${y(last).toFixed(1)}" fill="currentColor"/>
       <circle class="enddot" r="4" cx="${x(pts.length-1).toFixed(1)}" cy="${y(last).toFixed(1)}" fill="currentColor" stroke="var(--bg)" stroke-width="2"/>
     </svg><div class="hero-tip"></div></div>
-    <div class="hero-date" id="hd-${kind}"></div>
+    <div class="hero-date" id="hd-${kind}"></div>${kind==='sleeve'?`<p class="hero-note">Value of today's holdings at Robinhood historical prices</p>`:''}
     <div class="ranges">${RANGES[kind].map(r=>`<button data-act="range" data-kind="${kind}" data-r="${r[0]}" aria-pressed="${r[0]===rk}">${r[0]}</button>`).join('')}</div>
   </section>`;
 }
@@ -941,7 +948,7 @@ function mountHero(){
       xl.setAttribute('x1',px);xl.setAttribute('x2',px);dot.setAttribute('cx',px);dot.setAttribute('cy',py);
       hv.textContent=f(v); const d=v-first; hc.textContent=`${d>=0?'+':'-'}${f(Math.abs(d))} (${(d>=0?'+':'')+(first?d/first*100:0).toFixed(2)}%)`; hc.style.color=d>=0?'var(--good)':'var(--bad)';
       tip.style.left=(px/W*100)+'%'; tip.textContent=f(v);
-      hd.textContent=(kind==='sleeve'&&S.range.sleeve==='1D')?pts[i].d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}):pts[i].d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); hw.textContent=''; }
+      hd.textContent=(kind==='sleeve'&&S.range.sleeve==='1D')?pts[i].d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):pts[i].d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); hw.textContent=''; }
     function move(e){ const r=ch.getBoundingClientRect(); const cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left; const i=Math.max(0,Math.min(pts.length-1,Math.round(cx/r.width*(pts.length-1)))); ch.classList.add('scrub'); at(i); }
     function leave(){ ch.classList.remove('scrub'); hv.textContent=base.v; hc.textContent=base.c; hc.style.color=''; hw.textContent=base.w; hd.textContent=''; }
     ch.addEventListener('pointermove',move); ch.addEventListener('pointerdown',move); ch.addEventListener('pointerleave',leave); ch.addEventListener('pointerup',leave);
@@ -949,10 +956,10 @@ function mountHero(){
 }
 function stagger(root){ [...root.children].forEach((el,i)=>el.style.setProperty('--i',i)); }
 function countUp(root){
-  if(reduced)return;
   root.querySelectorAll('[data-count]').forEach(el=>{
     const end=parseFloat(el.dataset.count), kind=el.dataset.kind||'money', dur=900, t0=performance.now();
     const f=v=> kind==='money'?fmt(v): kind==='money2'?fmt2(v): kind==='x'?v.toFixed(2)+'x': kind==='pct'?pct(v): Math.round(v).toLocaleString();
+    if(reduced){ el.textContent=f(end); return; }
     const step=t=>{const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); el.textContent=f(end*e); if(k<1)requestAnimationFrame(step); else el.textContent=f(end);};
     requestAnimationFrame(step);
   });
@@ -976,10 +983,14 @@ function softRender(){ /* re-render without entrance animation and without reset
 /* ---------- Shared bits ---------- */
 const roman=n=>['','I','II','III','IV','V','VI','VII','VIII','IX','X'][n]||String(n);
 const pill=(t,tone)=>`<span class="pill ${tone}">${esc(t)}</span>`;
-const callPill=s=>s==='paid'?pill('Paid','good'):s==='pending'?pill('Wire sent, confirming','warn'):pill('Due Nov 14','bad');
+const callPill=s=>s==='paid'?pill('Paid','good'):s==='pending'?pill('Wire sent, confirming','warn'):pill(dueIn(),'bad');
+function dueIn(){ const d=Math.ceil((new Date(2026,10,14)-new Date(new Date().toDateString()))/86400000); return d>1?`Due Nov 14 · ${d} days`:d===1?'Due tomorrow':d===0?'Due today':'Past due'; }
 function stepper(st,labels=STATUS){return `<div class="stepper">${labels.map((l,i)=>`<div class="step ${i<st?'done':i===st?(st===3?'done':'now'):''}"><i></i>${l}</div>`).join('')}</div>`;}
 function greet(){const h=new Date().getHours();return h<12?'Good morning':h<18?'Good afternoon':'Good evening';}
-const livePill=()=>S.bk?`<span class="pill live">Live · ${ago(S.bk.asOf)}</span>`:`<span class="pill neutral">Connecting</span>`;
+const dayLbl=()=>(S.bk&&S.bk.changeLabel)||'Today';
+const isFresh=()=>S.bk&&(Date.now()-new Date(S.bk.asOf).getTime())<36*3600000;
+function syncPill(short){ if(!S.bk)return `<span class="pill neutral">Connecting</span>`; return isFresh()?`<span class="pill live">Live${short?'':' · '+ago(S.bk.asOf)}</span>`:`<span class="pill neutral">Synced ${ago(S.bk.asOf)}</span>`; }
+const livePill=()=>syncPill(false);
 
 function chart(){
   const W=640,H=240,L=58,R=620,T=26,B=196,max=200000;
@@ -1009,7 +1020,7 @@ function ticker(){
   if(!S.bk)return '';
   const c=bkCalc(S.bk);
   const items=c.pos.map(p=>`<span><b>${esc(p.symbol)}</b>${fmt2(p.price)} <span class="${p.dayPct>=0?'up':'down'}">${pct(p.dayPct)}</span></span>`).join('');
-  const head=`<span><b>CARLISLE SLEEVE</b>${fmt2(c.total)} <span class="${c.dayPct>=0?'up':'down'}">${pct(c.dayPct)} today</span></span>`;
+  const head=`<span><b>CARLISLE SLEEVE</b>${fmt2(c.total)} <span class="${c.dayPct>=0?'up':'down'}">${pct(c.dayPct)} ${dayLbl().toLowerCase()}</span></span>`;
   return `<div class="ticker" aria-label="Live prices"><div class="ticker-track">${head}${items}${head}${items}</div></div>`;
 }
 function feedLog(limit=8){
@@ -1022,13 +1033,12 @@ function marketsBlock(forInvestor){
   const c=bkCalc(S.bk);
   const share=forInvestor?SHARE:1;
   return `<div class="card lift"><div class="card-head"><h2>Public markets sleeve</h2>${livePill()}</div>
-    <div class="list">${c.pos.slice(0,5).map(p=>`<div class="row"><div class="main"><strong class="mono">${esc(p.symbol)}</strong><span>${esc(p.name||'')}</span></div>${spark(fakeSpark(p),p.dayPct>=0?'up':'down')}<div class="end num"><div>${fmt2(p.mv*share)}</div><span class="chg ${p.dayPct>=0?'up':'down'}">${pct(p.dayPct)}</span></div></div>`).join('')}</div>
+    <div class="list">${c.pos.slice(0,5).map(p=>`<div class="row"><div class="main"><strong class="mono">${esc(p.symbol)}</strong><span>${esc(p.name||'')}</span></div>${spark(realSpark(p),realSpark(p).slice(-1)[0]>=realSpark(p)[0]?'up':'down')}<div class="end num"><div>${fmt2(p.mv*share)}</div><span class="chg ${p.dayPct>=0?'up':'down'}">${pct(p.dayPct)}</span></div></div>`).join('')}</div>
     <div class="chips" style="margin-top:12px"><button class="link" data-act="tab" data-tab="${forInvestor?'markets':'t-brokerage'}">Full sleeve</button></div></div>`;
 }
-function fakeSpark(p){ /* deterministic path from avg to price for a sparkline shape */
-  const n=12, out=[]; let seed=p.symbol.split('').reduce((a,ch)=>a+ch.charCodeAt(0),0);
-  for(let i=0;i<n;i++){ seed=(seed*9301+49297)%233280; const r=seed/233280-.5; out.push(p.avg+(p.price-p.avg)*(i/(n-1))+r*Math.abs(p.price-p.avg||p.price*.05)*.6); }
-  out[n-1]=p.price; return out;
+function realSpark(p){ /* past month of Robinhood daily closes, then the latest price */
+  const h=S.bk&&S.bk.history&&S.bk.history.spark&&S.bk.history.spark[p.symbol];
+  return h&&h.length>1?h:[p.prevClose,p.price];
 }
 
 /* ---------- Investor views ---------- */
@@ -1044,13 +1054,13 @@ VIEWS.overview=()=>{
     <div class="stat"><span class="label">Paid in</span><span class="v" data-count="${PAID}">$0</span><span class="s">${Math.round(PAID/INVESTOR.commit*100)}% called</span></div>
     <div class="stat key"><span class="label">TVPI</span><span class="v" data-count="${TVPI}" data-kind="x">0.00x</span><span class="s">+${fmt(VALUE-PAID)} on cost</span></div>
     <div class="stat"><span class="label">Unfunded</span><span class="v" data-count="${INVESTOR.commit-PAID}">$0</span><span class="s">Remaining commitment</span></div>
-    <div class="stat"><span class="label">Public sleeve, your share</span><span class="v" data-count="${S.bk?bkCalc(S.bk).total*SHARE:0}" data-kind="money2">$0</span><span class="s ${S.bk&&bkCalc(S.bk).dayPct<0?'down':'up'}">${S.bk?pct(bkCalc(S.bk).dayPct)+' today':'syncing'}</span></div>
+    <div class="stat"><span class="label">Public sleeve, your share</span><span class="v" data-count="${S.bk?bkCalc(S.bk).total*SHARE:0}" data-kind="money2">$0</span><span class="s ${S.bk&&bkCalc(S.bk).dayPct<0?'down':'up'}">${S.bk?pct(bkCalc(S.bk).dayPct)+' '+dayLbl().toLowerCase():'syncing'}</span></div>
   </div>
   <div class="grid2">
     <div class="card lift"><div class="card-head"><h2>Your private holdings</h2><button class="link" data-act="tab" data-tab="portfolio">All holdings</button></div>
       <div class="list">${VENTURES.slice(0,5).map(v=>`<div class="row clickable" data-act="sheet" data-id="${v.id}"><div class="main"><strong>${esc(v.name)}</strong><span>${esc(v.sector)}</span></div>${spark(v.hist.filter(x=>x>0),'up')}<div class="end num"><div class="mono">${fmt(v.val)}</div><span class="meta">${(v.val/v.cost).toFixed(2)}x</span></div></div>`).join('')}</div></div>
     <div class="card lift"><div class="card-head"><h2>Latest from Carlisle</h2><button class="link" data-act="tab" data-tab="updates">All updates</button></div>
-      <div class="post"><span class="meta">${esc(u.date)} · ${esc(u.venture)}</span><h3>${esc(u.title)}</h3><p>${esc(u.body)}</p></div>
+      <div class="post"><span class="meta">${esc(u.date)} · ${esc(u.venture)}</span><h2 class="post-title">${esc(u.title)}</h2><p>${esc(u.body)}</p></div>
       <div style="margin-top:14px"><div class="label" style="margin-bottom:6px">Agent activity</div>${feedLog(3)}</div></div>
   </div>
   ${marketsBlock(true)}`;
@@ -1072,7 +1082,7 @@ function marketsPage(forInvestor){
   ${hero('sleeve',{label:forInvestor?'Your share of the public sleeve':'Brokerage account value',mult:share,cents:true,live:true})}
   ${ticker()}
   <div class="stats">
-    <div class="stat"><span class="label">Today</span><span class="v ${c.day>=0?'up':'down'}" data-count="${c.day*share}" data-kind="money2">$0.00</span><span class="s ${c.dayPct>=0?'up':'down'}">${pct(c.dayPct)}</span></div>
+    <div class="stat"><span class="label">${dayLbl()}</span><span class="v ${c.day>=0?'up':'down'}" data-count="${c.day*share}" data-kind="money2">$0.00</span><span class="s ${c.dayPct>=0?'up':'down'}">${pct(c.dayPct)}</span></div>
     <div class="stat"><span class="label">Open P&amp;L</span><span class="v ${c.pl>=0?'up':'down'}" data-count="${c.pl*share}" data-kind="money2">$0.00</span><span class="s ${c.plPct>=0?'up':'down'}">${pct(c.plPct)} on cost</span></div>
     <div class="stat"><span class="label">Cash</span><span class="v" data-count="${(S.bk.cash||0)*share}" data-kind="money2">$0.00</span><span class="s">Buying power</span></div>
     <div class="stat"><span class="label">Positions</span><span class="v" data-count="${c.pos.length}" data-kind="int">0</span><span class="s">Updated ${ago(S.bk.asOf)}</span></div>
@@ -1083,8 +1093,8 @@ function marketsPage(forInvestor){
       <p class="meta" style="margin:10px 0 0">The Carlisle agent reads the account on a schedule, prices every position and publishes this page for every investor at once. Source: ${esc(S.bk.source||'Robinhood')}, ${S.bkSrc==='live'?'live store':'last published snapshot'}.</p></div>
   </div>
   <div class="card"><div class="card-head"><h2>Positions</h2><span class="meta">Prices as of ${new Date(S.bk.asOf).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}</span></div>
-  <div class="table-wrap"><table><thead><tr><th>Symbol</th><th>Trend</th><th class="r">Shares</th><th class="r">Avg cost</th><th class="r">Price</th><th class="r">Today</th><th class="r">Market value</th><th class="r">P&amp;L</th></tr></thead><tbody>
-  ${c.pos.map(p=>`<tr><td><strong class="mono">${esc(p.symbol)}</strong><div class="meta">${esc(p.name||'')}</div></td><td>${spark(fakeSpark(p),p.dayPct>=0?'up':'down')}</td><td class="r mono">${(p.qty*share).toFixed(4)}</td><td class="r mono">${fmt2(p.avg)}</td><td class="r mono">${fmt2(p.price)}</td><td class="r mono ${p.dayPct>=0?'up':'down'}">${pct(p.dayPct)}</td><td class="r mono">${fmt2(p.mv*share)}</td><td class="r mono ${p.pl>=0?'up':'down'}">${fmt2(p.pl*share)}<div class="meta ${p.pl>=0?'up':'down'}">${pct(p.plPct)}</div></td></tr>`).join('')}
+  <div class="table-wrap"><table><thead><tr><th>Symbol</th><th>Trend</th><th class="r">Shares</th><th class="r">Avg cost</th><th class="r">Price</th><th class="r">${dayLbl()}</th><th class="r">Market value</th><th class="r">P&amp;L</th></tr></thead><tbody>
+  ${c.pos.map(p=>`<tr><td><strong class="mono">${esc(p.symbol)}</strong><div class="meta">${esc(p.name||'')}</div></td><td>${spark(realSpark(p),realSpark(p).slice(-1)[0]>=realSpark(p)[0]?'up':'down')}</td><td class="r mono">${(p.qty*share).toFixed(4)}</td><td class="r mono">${fmt2(p.avg)}</td><td class="r mono">${fmt2(p.price)}</td><td class="r mono ${p.dayPct>=0?'up':'down'}">${pct(p.dayPct)}</td><td class="r mono">${fmt2(p.mv*share)}</td><td class="r mono ${p.pl>=0?'up':'down'}">${fmt2(p.pl*share)}<div class="meta ${p.pl>=0?'up':'down'}">${pct(p.plPct)}</div></td></tr>`).join('')}
   <tr><td><strong>Total</strong></td><td></td><td></td><td></td><td></td><td class="r mono ${c.dayPct>=0?'up':'down'}"><strong>${pct(c.dayPct)}</strong></td><td class="r mono"><strong>${fmt2(c.mv*share)}</strong></td><td class="r mono ${c.pl>=0?'up':'down'}"><strong>${fmt2(c.pl*share)}</strong></td></tr>
   </tbody></table></div></div>
   ${forInvestor?`<div class="alert"><div class="txt"><strong>Add to the public markets sleeve</strong><span>Minimum $5,000, liquid with 30 days notice, reported live on this page.</span></div><button class="btn gold" data-act="invest" data-id="public">Invest</button></div>`:''}`;
@@ -1140,7 +1150,7 @@ VIEWS.documents=()=>{
   <div class="card"><div class="list">${list.map(d=>`<div class="row clickable" data-act="doc" data-id="${d.id}" tabindex="0"><div class="doc-ico">PDF</div><div class="main"><strong>${esc(d.title)}</strong><span>${esc(d.cat)} · ${esc(d.date)}</span></div><div class="end"><span class="link">Open</span></div></div>`).join('')}</div></div>`;
 };
 VIEWS.updates=()=>`<div class="page-head"><div><h1>Updates</h1><p>News from Carlisle and the portfolio, published to every investor at once</p></div>${db?'<span class="pill live">Live</span>':''}</div>
-  <div class="feed">${allUpdates().map(u=>`<div class="card post lift"><span class="meta">${esc(u.date)} · ${esc(u.venture)}</span><h3>${esc(u.title)}</h3><p>${esc(u.body)}</p></div>`).join('')}</div>`;
+  <div class="feed">${allUpdates().map(u=>`<div class="card post lift"><span class="meta">${esc(u.date)} · ${esc(u.venture)}</span><h2 class="post-title">${esc(u.title)}</h2><p>${esc(u.body)}</p></div>`).join('')}</div>`;
 VIEWS.messages=()=>`<div class="page-head"><div><h1>Messages</h1><p>Secure thread with George Serafin, managing member</p></div></div>
   <div class="card"><div class="thread" id="thread">${S.messages.map(m=>`<div class="msg ${m.from}">${m.typing?'<span class="typing"><i></i><i></i><i></i></span>':esc(m.text)}<small>${esc(m.time||'')}</small></div>`).join('')}</div>
   <form class="composer" data-form="msg"><input type="text" id="msgInput" placeholder="Write a message" aria-label="Message" autocomplete="off"><button class="btn">Send</button></form></div>`;
@@ -1162,7 +1172,7 @@ function ruleAnswer(q){
   const s=q.toLowerCase();
   const v=VENTURES.find(v=>s.includes(v.name.toLowerCase())||s.includes(v.id)||(v.full&&s.includes(v.full.toLowerCase()))||(v.id==='oggames'&&s.includes('world at war'))||(v.id==='ogarchives'&&s.includes('archive')));
   if(v) return `${esc(v.name)} is at the ${esc(v.stage.toLowerCase())} stage. Your cost is ${fmt(v.cost)} and the current value is ${fmt(v.val)} (${(v.val/v.cost).toFixed(2)}x). Next: ${esc(v.next)} <button class="link" data-act="sheet" data-id="${v.id}">Open tear sheet</button>`;
-  if(/sleeve|public|stock|robinhood|market|today/.test(s)&&S.bk){const c=bkCalc(S.bk);return `The public markets sleeve is worth ${fmt2(c.total)} (${pct(c.dayPct)} today), your share ${fmt2(c.total*SHARE)}. Largest position: ${c.pos[0].symbol} at ${fmt2(c.pos[0].mv)}. Updated ${ago(S.bk.asOf)}. <button class="link" data-act="tab" data-tab="markets">Open public markets</button>`;}
+  if(/sleeve|public|stock|robinhood|market|today/.test(s)&&S.bk){const c=bkCalc(S.bk);return `The public markets sleeve is worth ${fmt2(c.total)} (${pct(c.dayPct)} ${dayLbl().toLowerCase()}), your share ${fmt2(c.total*SHARE)}. Largest position: ${c.pos[0].symbol} at ${fmt2(c.pos[0].mv)}. Updated ${ago(S.bk.asOf)}. <button class="link" data-act="tab" data-tab="markets">Open public markets</button>`;}
   if(/call|due|wire/.test(s)) return S.call4.hale==='paid'?'Call No. 4 is paid. No other calls are open.':`Call No. 4 is ${fmt(40000)}, due Nov 14, 2026. ${S.call4.hale==='pending'?'Your wire is marked as sent and is awaiting confirmation.':'It funds Continental tooling and the Nexus beta.'} <button class="link" data-act="tab" data-tab="calls">Go to capital calls</button>`;
   if(/tvpi|multiple|return|perform/.test(s)) return `Your TVPI is ${TVPI.toFixed(2)}x: ${fmt(VALUE)} in value on ${fmt(PAID)} paid in, as of ${FUND.asOf}. No distributions have been made yet.`;
   if(/still invest|capacity|can i invest|how much can|offer|minimum/.test(s)) return `You have ${fmt(INVESTOR.capacity-pledgedBy(INVESTOR.name))} of pre cleared capacity. Six offerings are open, with minimums from ${fmt(2500)} (ASTRAEUS facility) to ${fmt(25000)} (Fund I). <button class="link" data-act="tab" data-tab="invest">See offerings</button>`;
@@ -1202,7 +1212,7 @@ VIEWS['t-overview']=()=>{
     <div class="stat"><span class="label">Called</span><span class="v" data-count="${fundPaid}">$0</span><span class="s">${Math.round(fundPaid/fundCommit*100)}% of commitments</span></div>
     <div class="stat key"><span class="label">Fund value</span><span class="v" data-count="${fundVal}">$0</span><span class="s">${TVPI.toFixed(2)}x TVPI</span></div>
     <div class="stat"><span class="label">New subscriptions</span><span class="v" data-count="${subTotal}">$0</span><span class="s">${pl.length} across ${new Set(pl.map(p=>p.offer)).size} offerings</span></div>
-    <div class="stat"><span class="label">Public sleeve</span><span class="v" data-count="${S.bk?bkCalc(S.bk).total:0}" data-kind="money2">$0.00</span><span class="s">${S.bk?pct(bkCalc(S.bk).dayPct)+' today':'syncing'}</span></div>
+    <div class="stat"><span class="label">Public sleeve</span><span class="v" data-count="${S.bk?bkCalc(S.bk).total:0}" data-kind="money2">$0.00</span><span class="s">${S.bk?pct(bkCalc(S.bk).dayPct)+' '+dayLbl().toLowerCase():'syncing'}</span></div>
   </div>
   <div class="grid2">
     <div class="card lift"><div class="card-head"><h2>Needs attention</h2></div><div class="list">
@@ -1243,7 +1253,7 @@ VIEWS['t-calls']=()=>`<div class="page-head"><div><h1>Capital calls</h1><p>Call 
   <div class="stats"><div class="stat key"><span class="label">Collected</span><span class="v" data-count="${call4In()}">$0</span><span class="s">of ${fmt(call4Total)}</span></div>
   <div class="stat"><span class="label">Continental tooling</span><span class="v" data-count="${call4Total*0.6}">$0</span><span class="s">60% of call</span></div>
   <div class="stat"><span class="label">Nexus private beta</span><span class="v" data-count="${call4Total*0.4}">$0</span><span class="s">40% of call</span></div></div>
-  <div class="card"><div class="table-wrap"><table><thead><tr><th>Investor</th><th class="r">Commitment</th><th class="r">Call No. 4</th><th>Status</th><th></th></tr></thead><tbody>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>Investor</th><th class="r">Commitment</th><th class="r">Call No. 4</th><th>Status</th><th><span class="sr-only">Action</span></th></tr></thead><tbody>
   ${LPS.map(l=>`<tr><td><strong>${esc(l.name)}</strong><div class="meta">${esc(l.type)}</div></td><td class="r mono">${fmt(l.commit)}</td><td class="r mono">${fmt(l.commit*0.16)}</td><td>${callPill(S.call4[l.id])}</td><td class="r">${S.call4[l.id]!=='paid'?`<button class="btn small" data-act="confirm" data-id="${l.id}">Confirm receipt</button>`:''}</td></tr>`).join('')}
   </tbody></table></div></div>`;
 VIEWS['t-investors']=()=>`<div class="page-head"><div><h1>Investors</h1><p>Fund I limited partners, values as of ${FUND.asOf}</p></div></div>

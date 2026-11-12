@@ -253,7 +253,7 @@ tr.flash-down td{animation:flashDown 1.6s ease}
 .feed{display:grid;gap:0}
 .feed .card{padding:22px 0}
 .post{display:grid;gap:6px}
-.post h3{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.post .post-title{font-size:22px;font-weight:600;letter-spacing:-.02em}
 .post p{margin:0;max-width:68ch;color:var(--ink)}
 .meta{font-size:12.5px;color:var(--muted)}
 
@@ -442,9 +442,9 @@ header.band::after{content:"";display:block;height:1px;background:linear-gradien
 .tab{font-family:var(--display);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:400;padding:12px 12px 13px}
 .tab-ink{background:var(--gold);height:2px;box-shadow:0 0 10px rgba(246,217,135,.8)}
 .page-head h1{font-family:var(--display);font-weight:400;font-size:24px;letter-spacing:.04em;line-height:1.3}
-.card h2,.post h3,.offer-top h3,.dr-head h2,.paper h4{font-family:var(--display);font-weight:400;letter-spacing:.06em}
+.card h2,.post .post-title,.offer-top h3,.dr-head h2,.paper h4{font-family:var(--display);font-weight:400;letter-spacing:.06em}
 .card h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.16em}
-.post h3{font-size:17px;line-height:1.4}
+.post .post-title{font-size:17px;line-height:1.4}
 .offer-top h3{font-size:15px;line-height:1.4}
 .dr-head h2{font-size:19px;line-height:1.35}
 .card-head h2::after{content:"";display:block;width:28px;height:1px;background:var(--gold);margin-top:10px;box-shadow:0 0 8px rgba(246,217,135,.7)}
@@ -552,3 +552,11 @@ main{gap:22px}
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
   .chart .line,.hero-chart .ln{stroke-dashoffset:0}.chart .area,.chart .pt,.hero-chart .ar{opacity:1}.prog i{width:var(--w)!important}
 }
+
+/* Audit fixes */
+main,#app{overflow-x:clip}
+.post .post-title{margin:6px 0}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.hero-note{margin:2px 0 0;font-size:11.5px;color:var(--muted)}
+input[type="checkbox"]{width:20px;height:20px}
+input[type="range"]{min-height:28px}
